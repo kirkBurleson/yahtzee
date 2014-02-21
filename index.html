@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<link rel="stylesheet" href="main.css">
+		<meta charset="utf-8">
+		<title>Yahtzee</title>		
+	</head>
+	<body>
+		<h1>Yahtzee</h1>
+		<hr>
+
+		<table id="dice">
+		<tr>
+			<td><img id="d1" src="images/dice1.gif" onClick="bit4.yahtzee.keepIt('d1')" title="check box below to keep"></td>
+			<td><img id="d2" src="images/dice2.gif" onClick="bit4.yahtzee.keepIt('d2')" title="check box below to keep"></td>
+			<td><img id="d3" src="images/dice3.gif" onClick="bit4.yahtzee.keepIt('d3')" title="check box below to keep"></td>
+			<td><img id="d4" src="images/dice4.gif" onClick="bit4.yahtzee.keepIt('d4')" title="check box below to keep"></td>
+			<td><img id="d5" src="images/dice5.gif" onClick="bit4.yahtzee.keepIt('d5')" title="check box below to keep"></td>
+			<td><input type="button" value="Roll" onClick="bit4.yahtzee.roll()"></td>
+		</tr>
+		<tr>
+			<td><input id="1" type="checkbox" title="keep" onClick="bit4.yahtzee.keepIt(this)"></td>
+			<td><input id="2"  type="checkbox" title="keep" onClick="bit4.yahtzee.keepIt(this)"></td>
+			<td><input id="3"  type="checkbox" title="keep" onClick="bit4.yahtzee.keepIt(this)"></td>
+			<td><input id="4"  type="checkbox" title="keep" onClick="bit4.yahtzee.keepIt(this)"></td>
+			<td><input id="5"  type="checkbox" title="keep" onClick="bit4.yahtzee.keepIt(this)"></td>
+		</tr>
+		</table>
+
+		<div id="upper">			
+			<table>
+				<thead>
+					<tr>
+						<th>Upper Section</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Ones</td>
+						<td><input type="button" value="open"></td>
+					</tr>
+
+					<tr>
+						<td>Twos</td>
+						<td><input type="button" value="open"></td>
+					</tr>
+
+					<tr>
+						<td>Threes</td>
+						<td><input type="button" value="open"></td>
+					</tr>
+
+					<tr>
+						<td>Fours</td>
+						<td><input type="button" value="open"></td>
+					</tr>
+
+					<tr>
+						<td>Fives</td>
+						<td><input type="button" value="open"></td>
+					</tr>
+
+					<tr>
+						<td>Sixes</td>
+						<td><input type="button" value="open"></td>
+					</tr>
+
+					<tr>
+						<td>Bonus</td>
+						<td><input type="button" value="0"></td>
+					</tr>
+
+					<tr>
+						<td>Total</td>
+					</tr>
+				</tbody>
+			</table>
+		
+			<table>
+				<tr>
+					<th>Lower Section</th>
+				</tr>
+				<tr>
+					<td>3 of a kind</td>
+					<td><input type="button" value="open"></td>
+				</tr>
+
+				<tr>
+					<td>4 of a kind</td>
+					<td><input type="button" value="open"></td>
+				</tr>
+
+				<tr>
+					<td>Full House</td>
+					<td><input type="button" value="open"></td>
+				</tr>
+
+				<tr>
+					<td>Sm. Straight</td>
+					<td><input type="button" value="open"></td>
+				</tr>
+
+				<tr>
+					<td>Lg. Straight</td>
+					<td><input type="button" value="open"></td>
+				</tr>
+
+				<tr>
+					<td>YAHTZEE</td>
+					<td><input type="button" value="open"></td>
+				</tr>
+
+				<tr>
+					<td>Chance</td>
+					<td><input type="button" value="open"></td>
+				</tr>
+
+				<tr>
+					<td>Total</td>
+				</tr>
+			</table>			
+		</div>
+
+		<div id="grandTotal">
+			<hr>
+			Grand Total: <span>0</span>
+		</div>
+				
+
+		<script src="utilities.js"></script>
+		<script src="dice.js"></script>
+		<script src="main.js"></script>
+	</body>
+</html>

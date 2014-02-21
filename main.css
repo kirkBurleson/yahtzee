@@ -1,0 +1,24 @@
+h1 input[type="button"] {
+	padding: 0;
+	margin: 0;
+	}
+
+
+#dice {
+	border-bottom: 1px solid black;
+	}
+	#dice td {
+		text-align: center;
+		}
+	#dice img {
+		border-radius: 2px;
+		}
+
+#upper {
+	}
+
+#lower {
+	}
+
+#grandTotal {
+	}
