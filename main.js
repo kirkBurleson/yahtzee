@@ -111,8 +111,7 @@ bit4.yahtzee = {};
 				addScoreToTotals,
 				clearForNextRoll;
 
-		// must use all rolls before applying the score
-		if (bit4.yahtzee.rolls !== 0) {
+		if (bit4.yahtzee.rolls === 3) {
 			return; }
 
 		bit4.yahtzee.unlockCheckboxes();
