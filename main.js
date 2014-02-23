@@ -39,6 +39,8 @@ bit4.yahtzee = {};
 			var state = bit4.yahtzee.gameState;
 			if (state === "roll") { 
 				bit4.yahtzee.msgPointer.innerHTML = "Roll the dice!";
+			} else if (state === "apply") {
+				bit4.yahtzee.msgPointer.innerHTML = "Apply the score!";
 			}
 		}, 1000);
 	};
@@ -76,7 +78,7 @@ bit4.yahtzee = {};
 		bit4.yahtzee.rolls--;
 		document.getElementById("rollsLeft").innerHTML = bit4.yahtzee.rolls;
 		if (bit4.yahtzee.rolls === 0) {
-			bit4.yahtzee.gameState = "Apply the score!"; }
+			bit4.yahtzee.gameState = "apply"; }
 	};
 
 	bit4.yahtzee.keepThisDie = function (checkbox) {
@@ -118,6 +120,7 @@ bit4.yahtzee = {};
 		applyUpperBonus = function () {
 			if (bit4.yahtzee.upper.scores.total >= 63) {
 				bit4.yahtzee.upper.scores.bonus = 35;
+				document.getElementById("bonus").value = 35;
 				updateUpperTotal();
 			}
 		};
@@ -256,7 +259,7 @@ bit4.yahtzee = {};
 				applyUpperBonus();
 				break;
 		}
-		bit4.yahtzee.gameState = "Roll the dice!";
+		bit4.yahtzee.gameState = "roll";
 	};
 
 }());
