@@ -11,22 +11,25 @@
 
 		<table id="dice">
 		<tr>
-			<td><img id="d1" src="images/dice1.gif" onClick="bit4.yahtzee.keepIt('d1')" title="check box below to keep"></td>
-			<td><img id="d2" src="images/dice2.gif" onClick="bit4.yahtzee.keepIt('d2')" title="check box below to keep"></td>
-			<td><img id="d3" src="images/dice3.gif" onClick="bit4.yahtzee.keepIt('d3')" title="check box below to keep"></td>
-			<td><img id="d4" src="images/dice4.gif" onClick="bit4.yahtzee.keepIt('d4')" title="check box below to keep"></td>
-			<td><img id="d5" src="images/dice5.gif" onClick="bit4.yahtzee.keepIt('d5')" title="check box below to keep"></td>
-			<td><input type="button" value="Roll" onClick="bit4.yahtzee.roll()"></td>			
+			<td><img id="d1" src="images/diceBlank.gif" title="check box below to keep"></td>
+			<td><img id="d2" src="images/diceBlank.gif" title="check box below to keep"></td>
+			<td><img id="d3" src="images/diceBlank.gif" title="check box below to keep"></td>
+			<td><img id="d4" src="images/diceBlank.gif" title="check box below to keep"></td>
+			<td><img id="d5" src="images/diceBlank.gif" title="check box below to keep"></td>
+			<td><input type="button" value="Roll" onClick="bit4.yahtzee.roll()"></td>
 		</tr>
 		<tr>
-			<td><input id="1" type="checkbox" title="keep" onClick="bit4.yahtzee.keepIt(this)"></td>
-			<td><input id="2"  type="checkbox" title="keep" onClick="bit4.yahtzee.keepIt(this)"></td>
-			<td><input id="3"  type="checkbox" title="keep" onClick="bit4.yahtzee.keepIt(this)"></td>
-			<td><input id="4"  type="checkbox" title="keep" onClick="bit4.yahtzee.keepIt(this)"></td>
-			<td><input id="5"  type="checkbox" title="keep" onClick="bit4.yahtzee.keepIt(this)"></td>
+			<td><input id="1" type="checkbox" title="keep" onClick="bit4.yahtzee.keepThisDie(this)"></td>
+			<td><input id="2"  type="checkbox" title="keep" onClick="bit4.yahtzee.keepThisDie(this)"></td>
+			<td><input id="3"  type="checkbox" title="keep" onClick="bit4.yahtzee.keepThisDie(this)"></td>
+			<td><input id="4"  type="checkbox" title="keep" onClick="bit4.yahtzee.keepThisDie(this)"></td>
+			<td><input id="5"  type="checkbox" title="keep" onClick="bit4.yahtzee.keepThisDie(this)"></td>
 			<td><span id="rollsLeft">3</span></td>
 		</tr>
 		</table>
+
+		<div id="msgBox">
+		</div>
 
 		<div id="upper">			
 			<table>
@@ -127,7 +130,6 @@
 			<hr>
 			Grand Total: <span>0</span>
 		</div>
-				
 
 		<script src="utilities.js"></script>
 		<script src="dice.js"></script>
