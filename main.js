@@ -8,6 +8,7 @@ bit4.yahtzee = {};
 	bit4.yahtzee.gameOver = false;
 	bit4.yahtzee.gameState = "roll";
 	bit4.yahtzee.rounds = 0;
+	bit4.yahtzee.maxRounds = 13;
 	bit4.yahtzee.rolls = 3;
 	bit4.yahtzee.grandTotal = 0;
 	bit4.yahtzee.upper = {};
@@ -43,7 +44,8 @@ bit4.yahtzee = {};
 			else if (state === "apply") {
 				bit4.yahtzee.msgPointer.innerHTML = "Apply the score!"; }
 			else if (state === "game_over") {
-				bit4.yahtzee.msgPointer.innerHTML = "GAME OVER"; }
+				bit4.yahtzee.msgPointer.innerHTML = "GAME OVER";
+				clearInterval(bit4.yahtzee.intervalID); }
 		}, 1000);
 	};
 	
@@ -56,7 +58,7 @@ bit4.yahtzee = {};
 	};
 
 	bit4.yahtzee.gameIsOver = function () {
-		return (++bit4.yahtzee.rounds) > 13;
+		return (++bit4.yahtzee.rounds) === bit4.yahtzee.maxRounds;
 	};
 
 	bit4.yahtzee.clearCheckboxes = function () {
@@ -85,13 +87,12 @@ bit4.yahtzee = {};
 		bit4.yahtzee.resetDiceContainer();
 		bit4.yahtzee.clearDiceImages();
 		bit4.yahtzee.lockCheckboxes();
+		bit4.yahtzee.gameState = "roll";
 
 		if (bit4.yahtzee.gameIsOver()) {
 			bit4.yahtzee.gameOver = true;
 			bit4.yahtzee.gameState = "game_over";
-			clearInterval(bit4.yahtzee.intervalID);
 			bit4.yahtzee.rolls = 0; // this will lock the game down
-			return;
 		}		
 	};
 
@@ -152,6 +153,47 @@ bit4.yahtzee = {};
 					 container[4] + container[5];
 	};
 
+	bit4.yahtzee.updateGrandTotal = function () {
+		var total;
+		total = bit4.yahtzee.calculateUpperTotal() +
+						bit4.yahtzee.calculateLowerTotal();
+
+		document.getElementById("gt").innerHTML = total;
+	};
+
+	bit4.yahtzee.calculateUpperTotal = function () {
+		var total,
+				bonus,
+				scores;
+
+		bonus = 0;
+		scores = bit4.yahtzee.upper.scores;
+
+		total = scores.ones + scores.twos + scores.threes +
+					  scores.fours + scores.fives + scores.sixes;
+
+		if (total >= 63) {
+			bonus = 35;
+			scores.bonus = bonus;
+			document.getElementById("bonus").value = bonus;
+		}
+
+		return total + bonus;
+	};
+
+	bit4.yahtzee.calculateLowerTotal = function () {
+		var total,
+				scores;
+
+		scores = bit4.yahtzee.lower.scores;
+
+		total = scores.threeOfKind + scores.fourOfKind + scores.fullHouse +
+						scores.smStr + scores.lgStr + scores.yahtzee +
+						scores.bonusYahtzee + scores.chance;
+
+		return total;
+	};
+
 	bit4.yahtzee.applyLowerSectionPoints = function (button) {
 		var i,
 				fullhouse,
@@ -163,16 +205,13 @@ bit4.yahtzee = {};
 		if (bit4.yahtzee.rolls === 3) {
 			return; }
 
+		bit4.yahtzee.roundCnt++;
+
 		bit4.yahtzee.unlockCheckboxes();
 
 		updateLowerTotal = function () {
-			var scores = bit4.yahtzee.lower.scores;
-
-			scores.total = scores.threeOfKind + scores.fourOfKind + scores.fullHouse +
-										 scores.smStr + scores.lgStr + scores.yahtzee +
-										 scores.bonusYahtzee + scores.chance;
-
-			document.getElementById("lowerTotal").value = scores.total;
+			var total = bit4.yahtzee.calculateLowerTotal();
+			document.getElementById("lowerTotal").value = total;
 		};
 
 		score = 0;
@@ -180,9 +219,6 @@ bit4.yahtzee = {};
 		// how many of each die values do we have?
 		for (i = 1; i < bit4.yahtzee.dieValues.length; i++) {
 			count[bit4.yahtzee.dieValues[i]]++; }
-
-		console.log(bit4.yahtzee.dieValues);
-		console.log(count);
 
 		switch (button.name) {
 			case "3 of kind":
@@ -246,13 +282,13 @@ bit4.yahtzee = {};
 		button.value = score;
 		button.disabled = true;
 		updateLowerTotal();
+		bit4.yahtzee.updateGrandTotal();
 		bit4.yahtzee.clearForNextRoll();
 	};
 
 	bit4.yahtzee.applyUpperSectionPoints = function (button) {
 		var i,
 				score,
-				applyUpperBonus,
 				updateUpperTotal,
 				addScoreToTotals,
 				clearForNextRoll;
@@ -262,22 +298,9 @@ bit4.yahtzee = {};
 
 		bit4.yahtzee.unlockCheckboxes();
 
-		applyUpperBonus = function () {
-			if (bit4.yahtzee.upper.scores.total >= 63) {
-				bit4.yahtzee.upper.scores.bonus = 35;
-				document.getElementById("bonus").value = 35;
-				updateUpperTotal();
-			}
-		};
-
 		updateUpperTotal = function () {
-			var scores = bit4.yahtzee.upper.scores;
-
-			scores.total = scores.ones + scores.twos + scores.threes +
-										 scores.fours + scores.fives + scores.sixes +
-										 scores.bonus;
-
-			document.getElementById("upperTotal").value = bit4.yahtzee.upper.scores.total;
+			var total = bit4.yahtzee.calculateUpperTotal();
+			document.getElementById("upperTotal").value = total;
 		};
 
 		score = 0;
@@ -334,9 +357,8 @@ bit4.yahtzee = {};
 		button.value = score;
 		button.disabled = true;
 		updateUpperTotal();
-		applyUpperBonus();
+		bit4.yahtzee.updateGrandTotal();
 		bit4.yahtzee.clearForNextRoll();		
-		bit4.yahtzee.gameState = "roll";
 	};
 
 }());

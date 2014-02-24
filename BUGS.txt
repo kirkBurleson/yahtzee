@@ -1,3 +1,2 @@
 BUGS:
 
-001: Grand total does not update when scores are applied.
