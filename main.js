@@ -111,8 +111,7 @@ bit4.yahtzee = {};
 			return;	}
 
 		if (bit4.yahtzee.checkboxesAreLocked) {
-			bit4.yahtzee.unlockCheckboxes();
-		}
+			bit4.yahtzee.unlockCheckboxes(); }
 
 		// roll the dice
 		for (i = 1; i < bit4.yahtzee.diceToBeRolled.length; i++) {
@@ -223,14 +222,14 @@ bit4.yahtzee = {};
 		switch (button.name) {
 			case "3 of kind":
 				for (i = 1; i < count.length; i++) {
-					if (count[i] === 3) {
+					if (count[i] >= 3) {
 						score = bit4.yahtzee.getDiceTotal();
 						bit4.yahtzee.lower.scores.threeOfKind = score; }}
 				break;
 
 			case "4 of kind":
 				for (i = 1; i < count.length; i++) {
-					if (count[i] === 4) {
+					if (count[i] >= 4) {
 						score = bit4.yahtzee.getDiceTotal();
 						bit4.yahtzee.lower.scores.fourOfKind = score; }}
 				break;

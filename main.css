@@ -1,36 +1,51 @@
-h1 input[type="button"] {
-	padding: 0;
-	margin: 0;
-	}
-
-
-#dice {
-	border-bottom: 1px solid black;
-	}
-	#dice td {
-		text-align: center;
-		}
-	#dice img {
-		border-radius: 2px;
-		}
-
-#msgBox {
-	position: absolute;
-	top: 95px;
-	left: 200px;
-	width: auto;
-	height: auto;
+header, footer{
 	padding-left: 10px;
 	padding-right: 10px;
+	}
+
+section, header, footer{
+	border: 2px solid silver;
+	border-radius: 5px;
+	background-color: gray;
+	}
+
+footer, #diceSection {
+	clear: both;
+	}
+
+h1, h3 {
+	padding: 0px;
+	margin: 0px;
+	}
+
+#time {
+	font-size: 14px;
 	color: blue;
-	border-radius: 2px;
-	}
-
-#upper {
-	}
-
-#lower {
+	float: right;
 	}
 
 #grandTotal {
+	background-color: transparent;
+	border: none;
+	text-align: center;
+	}
+
+#upperSection {
+	float: left;
+	width: 40%;
+	height: 400px;
+	}
+
+#lowerSection {
+	float: right;
+	width: 40%;
+	height: 400px;
+	}
+
+#upperSection, #lowerSection, #diceSection {
+	margin-bottom: 10px;
+	}
+
+#diceSection {
+	height: 100px;
 	}

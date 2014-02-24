@@ -1,2 +1,3 @@
 BUGS:
 
+001:FIXED- not finding small straight with 4 fives and a 1

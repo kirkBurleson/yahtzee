@@ -1,37 +1,20 @@
 <!doctype html>
 <html lang="en">
 	<head>
-		<link rel="stylesheet" href="main.css">
 		<meta charset="utf-8">
-		<title>Yahtzee</title>		
+		<link rel="stylesheet" href="main.css">
+		<title>Yahtzee</title>
 	</head>
 	<body>
-		<h1>Yahtzee</h1>
-		<hr>
+		<header>
+			<h1>Yahtzee</h1>			
+		</header>
 
-		<table id="dice">
-		<tr>
-			<td><img id="d1" src="images/diceBlank.gif" title="check box below to keep"></td>
-			<td><img id="d2" src="images/diceBlank.gif" title="check box below to keep"></td>
-			<td><img id="d3" src="images/diceBlank.gif" title="check box below to keep"></td>
-			<td><img id="d4" src="images/diceBlank.gif" title="check box below to keep"></td>
-			<td><img id="d5" src="images/diceBlank.gif" title="check box below to keep"></td>
-			<td><input type="button" value="Roll" onClick="bit4.yahtzee.roll()"></td>
-		</tr>
-		<tr>
-			<td><input id="1" type="checkbox" title="keep" onClick="bit4.yahtzee.keepThisDie(this)"></td>
-			<td><input id="2"  type="checkbox" title="keep" onClick="bit4.yahtzee.keepThisDie(this)"></td>
-			<td><input id="3"  type="checkbox" title="keep" onClick="bit4.yahtzee.keepThisDie(this)"></td>
-			<td><input id="4"  type="checkbox" title="keep" onClick="bit4.yahtzee.keepThisDie(this)"></td>
-			<td><input id="5"  type="checkbox" title="keep" onClick="bit4.yahtzee.keepThisDie(this)"></td>
-			<td><span id="rollsLeft">3</span></td>
-		</tr>
-		</table>
+		<section id="grandTotal">
+			<h3><span id="gt">000</span></h3>
+		</section>
 
-		<div id="msgBox">
-		</div>
-
-		<div id="upper">			
+		<section id="upperSection">
 			<table>
 				<thead>
 					<tr>
@@ -80,7 +63,9 @@
 					</tr>
 				</tbody>
 			</table>
-		
+		</section>
+
+		<section id="lowerSection">
 			<table>
 				<tr>
 					<th>Lower Section</th>
@@ -125,14 +110,33 @@
 					<td><input type="button" id="lowerTotal" readonly value="0"></td>
 				</tr>
 			</table>			
-		</div>
+		</section>
 
-		<div id="grandTotal">
-			<hr>
-			Grand Total: <span id="gt">0</span>
-		</div>
+		<section id="diceSection">
+			<table id="dice">
+			<tr>
+				<td><img id="d1" src="images/diceBlank.gif" title="check box below to keep"></td>
+				<td><img id="d2" src="images/diceBlank.gif" title="check box below to keep"></td>
+				<td><img id="d3" src="images/diceBlank.gif" title="check box below to keep"></td>
+				<td><img id="d4" src="images/diceBlank.gif" title="check box below to keep"></td>
+				<td><img id="d5" src="images/diceBlank.gif" title="check box below to keep"></td>
+				<td><input type="button" value="Roll" onClick="bit4.yahtzee.roll()"></td>
+			</tr>
+			<tr>
+				<td><input id="1" type="checkbox" title="keep" onClick="bit4.yahtzee.keepThisDie(this)"></td>
+				<td><input id="2"  type="checkbox" title="keep" onClick="bit4.yahtzee.keepThisDie(this)"></td>
+				<td><input id="3"  type="checkbox" title="keep" onClick="bit4.yahtzee.keepThisDie(this)"></td>
+				<td><input id="4"  type="checkbox" title="keep" onClick="bit4.yahtzee.keepThisDie(this)"></td>
+				<td><input id="5"  type="checkbox" title="keep" onClick="bit4.yahtzee.keepThisDie(this)"></td>
+				<td><span id="rollsLeft">3</span></td>
+			</tr>
+			</table>
+		</section>
 
-		<script src="utilities.js"></script>
+		<footer>
+			<span id="msgBox"></span>
+		</footer>
+		
 		<script src="dice.js"></script>
 		<script src="main.js"></script>
 	</body>
