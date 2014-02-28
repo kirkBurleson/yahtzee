@@ -174,7 +174,7 @@ bit4.yahtzee = {};
 		if (total >= 63) {
 			bonus = 35;
 			scores.bonus = bonus;
-			document.getElementById("bonus").value = bonus;
+			document.getElementById("bonus").innerHTML = bonus;
 		}
 
 		return total + bonus;
@@ -193,12 +193,13 @@ bit4.yahtzee = {};
 		return total;
 	};
 
-	bit4.yahtzee.applyLowerSectionPoints = function (button) {
+	bit4.yahtzee.applyLowerSectionPoints = function (button, e) {
 		var i,
 				fullhouse,
 				smStraight,
 				score,
 				count,
+				scoreElement,
 				updateLowerTotal;
 
 		if (bit4.yahtzee.rolls === 3) {
@@ -210,7 +211,7 @@ bit4.yahtzee = {};
 
 		updateLowerTotal = function () {
 			var total = bit4.yahtzee.calculateLowerTotal();
-			document.getElementById("lowerTotal").value = total;
+			document.getElementById("lowerTotal").innerHTML = total;
 		};
 
 		score = 0;
@@ -278,18 +279,21 @@ bit4.yahtzee = {};
 				break;
 		}
 
-		button.value = score;
-		button.disabled = true;
+		scoreElement = document.getElementById(e);
+		scoreElement.innerHTML = score;
+		scoreElement.style.display = "inline";
+		button.style.display = "none";
 		updateLowerTotal();
 		bit4.yahtzee.updateGrandTotal();
 		bit4.yahtzee.clearForNextRoll();
 	};
 
-	bit4.yahtzee.applyUpperSectionPoints = function (button) {
+	bit4.yahtzee.applyUpperSectionPoints = function (button, e) {
 		var i,
 				score,
 				updateUpperTotal,
 				addScoreToTotals,
+				scoreElement,
 				clearForNextRoll;
 
 		if (bit4.yahtzee.rolls === 3) {
@@ -299,7 +303,7 @@ bit4.yahtzee = {};
 
 		updateUpperTotal = function () {
 			var total = bit4.yahtzee.calculateUpperTotal();
-			document.getElementById("upperTotal").value = total;
+			document.getElementById("upperTotal").innerHTML = total;
 		};
 
 		score = 0;
@@ -353,8 +357,10 @@ bit4.yahtzee = {};
 				break;
 		}
 
-		button.value = score;
-		button.disabled = true;
+		scoreElement = document.getElementById(e);
+		scoreElement.innerHTML = score;
+		scoreElement.style.display = "inline";
+		button.style.display = "none";
 		updateUpperTotal();
 		bit4.yahtzee.updateGrandTotal();
 		bit4.yahtzee.clearForNextRoll();		

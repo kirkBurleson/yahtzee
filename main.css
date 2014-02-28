@@ -3,14 +3,13 @@ header, footer{
 	padding-right: 10px;
 	}
 
-section, header, footer{
-	border: 2px solid silver;
+section, header, footer {
 	border-radius: 5px;
 	background-color: gray;
 	}
 
-footer, #diceSection {
-	clear: both;
+footer {
+	text-align: center;
 	}
 
 h1, h3 {
@@ -18,34 +17,48 @@ h1, h3 {
 	margin: 0px;
 	}
 
-#time {
-	font-size: 14px;
-	color: blue;
+#container {
+	width: 400px;
+	padding: 10px;
+	margin: 10px;
+	}
+
+#gt {
 	float: right;
 	}
 
-#grandTotal {
-	background-color: transparent;
-	border: none;
+#scoreSection{
+	overflow: auto;
+	padding: 10px;
+	margin-bottom: 10px;
 	text-align: center;
 	}
 
+	#scoreSection th {		
+		text-align: center;
+		}
+
+	#scoreSection td {
+		text-align: left;
+		}
+
 #upperSection {
 	float: left;
-	width: 40%;
-	height: 400px;
 	}
 
 #lowerSection {
 	float: right;
-	width: 40%;
-	height: 400px;
-	}
-
-#upperSection, #lowerSection, #diceSection {
-	margin-bottom: 10px;
 	}
 
 #diceSection {
-	height: 100px;
+	margin-bottom: 10px;
+	text-align: center;
+	}
+
+#diceSection table {
+	margin: 0 auto;
+	}
+
+#diceSection img {
+	border-radius: 2px;
 	}
