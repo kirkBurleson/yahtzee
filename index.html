@@ -11,117 +11,31 @@
 			<h1>Yahtzee<span id="gt">000</span></h1>			
 		</header>
 		<hr>
-		<section id="scoreSection">			
+		<section id="scoreSection">
+
 			<section id="upperSection">
-			<table>
-				<thead>
-					<tr>
-						<th colspan="2">Upper Section</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>Ones</td>
-						<td id="ones" style="display: none; text-align: center">-</td>
-						<td><input type="button" name="ones" value="open" onClick="bit4.yahtzee.applyUpperSectionPoints(this, 'ones')"></td>
-					</tr>
-
-					<tr>
-						<td>Twos</td>
-						<td id="twos" style="display: none; text-align: center">-</td>
-						<td><input type="button" name="twos" value="open" onClick="bit4.yahtzee.applyUpperSectionPoints(this, 'twos')"></td>
-					</tr>
-
-					<tr>
-						<td>Threes</td>
-						<td id="threes" style="display: none; text-align: center">-</td>
-						<td><input type="button" name="threes" value="open" onClick="bit4.yahtzee.applyUpperSectionPoints(this, 'threes')"></td>
-					</tr>
-
-					<tr>
-						<td>Fours</td>
-						<td id="fours" style="display: none; text-align: center">-</td>
-						<td><input type="button" name="fours" value="open" onClick="bit4.yahtzee.applyUpperSectionPoints(this, 'fours')"></td>
-					</tr>
-
-					<tr>
-						<td>Fives</td>
-						<td id="fives" style="display: none; text-align: center">-</td>
-						<td><input type="button" name="fives" value="open" onClick="bit4.yahtzee.applyUpperSectionPoints(this, 'fives')"></td>
-					</tr>
-
-					<tr>
-						<td>Sixes</td>
-						<td id="sixes" style="display: none; text-align: center">-</td>
-						<td><input type="button" name="sixes" value="open" onClick="bit4.yahtzee.applyUpperSectionPoints(this, 'sixes')"></td>
-					</tr>
-
-					<tr>
-						<td>Bonus</td>
-						<td style="text-align: center"><span id="bonus">0</span></td>
-					</tr>
-
-					<tr>
-						<td>Total</td>
-						<td style="text-align: center"><span id="upperTotal">0</span></td>
-					</tr>
-				</tbody>
-			</table>
+				<div class="leftSide"> <span class="canClick roundCorners" onClick="bit4.yahtzee.applyUpperSectionPoints('ones')">Ones</span>     <span id="ones" class="score">-</span>   </div>
+				<div class="leftSide"> <span class="canClick roundCorners" onClick="bit4.yahtzee.applyUpperSectionPoints('twos')">Twos</span>     <span id="twos" class="score">-</span>   </div>
+				<div class="leftSide"> <span class="canClick roundCorners" onClick="bit4.yahtzee.applyUpperSectionPoints('threes')">Threes</span> <span id="threes" class="score">-</span> </div>
+				<div class="leftSide"> <span class="canClick roundCorners" onClick="bit4.yahtzee.applyUpperSectionPoints('fours')">Fours</span>   <span id="fours" class="score">-</span>  </div>
+				<div class="leftSide"> <span class="canClick roundCorners" onClick="bit4.yahtzee.applyUpperSectionPoints('fives')">Fives</span>   <span id="fives" class="score">-</span>  </div>
+				<div class="leftSide"> <span class="canClick roundCorners" onClick="bit4.yahtzee.applyUpperSectionPoints('sixes')">Sixes</span>   <span id="sixes" class="score">-</span>  </div>
+				<div class="leftSide"> <span>Bonus</span>   <span id="bonus" class="score">0</span>      </div>
+				<div class="leftSide"> <span>Total</span>   <span id="upperTotal" class="score">0</span> </div>
 			</section>
 
 			<section id="lowerSection">
-			<table>
-				<tr>
-					<th colspan="2">Lower Section</th>
-				</tr>
-				<tr>
-					<td>3 of a kind</td>
-					<td id="3kind" style="display: none; text-align: center">-</td>
-					<td><input type="button" name="3 of kind" value="open" onClick="bit4.yahtzee.applyLowerSectionPoints(this, '3kind')"></td>
-				</tr>
-
-				<tr>
-					<td>4 of a kind</td>
-					<td id="4kind" style="display: none; text-align: center">-</td>
-					<td><input type="button" name="4 of kind" value="open" onClick="bit4.yahtzee.applyLowerSectionPoints(this, '4kind')"></td>
-				</tr>
-
-				<tr>
-					<td>Full House</td>
-					<td id="fh" style="display: none; text-align: center">-</td>
-					<td><input type="button" name="full house" value="open" onClick="bit4.yahtzee.applyLowerSectionPoints(this, 'fh')"></td>
-				</tr>
-
-				<tr>
-					<td>Sm. Straight</td>
-					<td id="smst" style="display: none; text-align: center">-</td>
-					<td><input type="button" name="sm straight" value="open" onClick="bit4.yahtzee.applyLowerSectionPoints(this, 'smst')"></td>
-				</tr>
-
-				<tr>
-					<td>Lg. Straight</td>
-					<td id="lgst" style="display: none; text-align: center">-</td>
-					<td><input type="button" name="lg straight" value="open" onClick="bit4.yahtzee.applyLowerSectionPoints(this, 'lgst')"></td>
-				</tr>
-
-				<tr>
-					<td>YAHTZEE</td>
-					<td id="y" style="display: none; text-align: center">-</td>
-					<td><input type="button" name="yahtzee" value="open" onClick="bit4.yahtzee.applyLowerSectionPoints(this, 'y')"></td>
-				</tr>
-
-				<tr>
-					<td>Chance</td>
-					<td id="ch" style="display: none; text-align: center">-</td>
-					<td><input type="button" name="chance" value="open" onClick="bit4.yahtzee.applyLowerSectionPoints(this, 'ch')"></td>
-				</tr>
-
-				<tr>
-					<td>Total</td>
-					<td style="text-align: center"><span id="lowerTotal">0</span></td>
-				</tr>
-			</table>
+				<div class="rightSide"> <span class="canClick roundCorners" onClick="bit4.yahtzee.applyLowerSectionPoints('3kind')">3 of a kind</span>  <span id="3kind" class="score">-</span> </div>
+				<div class="rightSide"> <span class="canClick roundCorners" onClick="bit4.yahtzee.applyLowerSectionPoints('4kind')">4 of a kind</span>  <span id="4kind" class="score">-</span> </div>
+				<div class="rightSide"> <span class="canClick roundCorners" onClick="bit4.yahtzee.applyLowerSectionPoints('fh')">Full House</span>      <span id="fh" class="score">-</span>    </div>
+				<div class="rightSide"> <span class="canClick roundCorners" onClick="bit4.yahtzee.applyLowerSectionPoints('smst')">Sm. Straight</span>  <span id="smst" class="score">-</span>  </div>
+				<div class="rightSide"> <span class="canClick roundCorners" onClick="bit4.yahtzee.applyLowerSectionPoints('lgst')">Lg. Straight</span>  <span id="lgst" class="score">-</span>  </div>
+				<div class="rightSide"> <span class="canClick roundCorners" onClick="bit4.yahtzee.applyLowerSectionPoints('y')">Yahtzee</span>          <span id="y" class="score">-</span>     </div>
+				<div class="rightSide"> <span class="canClick roundCorners" onClick="bit4.yahtzee.applyLowerSectionPoints('xy')">Extra Yahtzee</span>   <span id="xy" class="score">-</span>    </div>
+				<div class="rightSide"> <span class="canClick roundCorners" onClick="bit4.yahtzee.applyLowerSectionPoints('ch')">Chance</span>          <span id="ch" class="score">-</span>    </div>
+				<div class="rightSide"> <span>Total</span>   <span id="lowerTotal" class="score">0</span> </div>
 			</section>
+
 		</section>
 
 		<section id="diceSection">
@@ -140,7 +54,7 @@
 				<td><input id="3"  type="checkbox" title="keep" onClick="bit4.yahtzee.keepThisDie(this)"></td>
 				<td><input id="4"  type="checkbox" title="keep" onClick="bit4.yahtzee.keepThisDie(this)"></td>
 				<td><input id="5"  type="checkbox" title="keep" onClick="bit4.yahtzee.keepThisDie(this)"></td>				
-				<td><h1><span id="rollsLeft">3</span></h1></td>
+				<td><h1><span id="rollsLeft">3</span></h1></td>				
 			</tr>
 			</table>
 		</section>
@@ -150,7 +64,7 @@
 		</footer>
 		</section>
 
-		<script src="dice.js"></script>
+		<script src="dice.js"></script>		
 		<script src="main.js"></script>
 	</body>
 </html>

@@ -31,16 +31,7 @@ h1, h3 {
 	overflow: auto;
 	padding: 10px;
 	margin-bottom: 10px;
-	text-align: center;
 	}
-
-	#scoreSection th {		
-		text-align: center;
-		}
-
-	#scoreSection td {
-		text-align: left;
-		}
 
 #upperSection {
 	float: left;
@@ -60,5 +51,27 @@ h1, h3 {
 	}
 
 #diceSection img {
-	border-radius: 2px;
+	border-radius: 5px;
+	}
+
+/* classes --------------------------- */
+
+.leftSide {
+	width: 100px;
+	}
+
+.rightSide {
+	width: 120px;
+	}
+
+.canClick:hover {
+	background-color: white;
+	}
+
+.roundCorners {
+	border-radius: 3px;
+	}
+
+.score {
+	float: right;
 	}
