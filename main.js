@@ -2,7 +2,6 @@ var bit4 = bit4 || {};
 bit4.yahtzee = bit4.yahtzee || {};
 
 (function () {
-	bit4.yahtzee.checkboxesAreLocked = true;
 	bit4.yahtzee.checkForYahtzee = false;
 	bit4.yahtzee.msgPointer;
 	bit4.yahtzee.intervalID;
@@ -13,6 +12,8 @@ bit4.yahtzee = bit4.yahtzee || {};
 	bit4.yahtzee.maxRolls = 3;
 	bit4.yahtzee.rolls = bit4.yahtzee.maxRolls;
 	bit4.yahtzee.grandTotal = 0;
+	bit4.yahtzee.diceToBeRolled = [0,1,2,3,4,5];
+	bit4.yahtzee.dieValues = [0,0,0,0,0,0];
 	bit4.yahtzee.upper = {};
 	bit4.yahtzee.lower = {};
 	bit4.yahtzee.upper.scores = {
@@ -33,11 +34,10 @@ bit4.yahtzee = bit4.yahtzee || {};
 		yahtzee: 0,
 		bonusYahtzee: 0,
 		chance: 0,
-		total: 0};
-	bit4.yahtzee.diceToBeRolled = [0,1,2,3,4,5];
-	bit4.yahtzee.dieValues = [0,0,0,0,0,0];
+		total: 0};	
 
-	startMessages = function () {
+	// start the message system
+	(function () {
 		bit4.yahtzee.msgPointer = document.getElementById("msgBox");
 		bit4.yahtzee.intervalID = setInterval(function () {
 			var state = bit4.yahtzee.gameState;
@@ -49,10 +49,7 @@ bit4.yahtzee = bit4.yahtzee || {};
 				bit4.yahtzee.msgPointer.innerHTML = "GAME OVER";
 				clearInterval(bit4.yahtzee.intervalID); }
 		}, 1000);
-	};
-	
-
-	startMessages();
+	}());
 
 	bit4.yahtzee.resetRollsCounter = function () {
 		bit4.yahtzee.rolls = bit4.yahtzee.maxRolls;
@@ -60,15 +57,7 @@ bit4.yahtzee = bit4.yahtzee || {};
 	};
 
 	bit4.yahtzee.gameIsOver = function () {
-		return (++bit4.yahtzee.rounds) === bit4.yahtzee.maxRounds;
-	};
-
-	bit4.yahtzee.clearCheckboxes = function () {
-		document.getElementById("1").checked = false;
-		document.getElementById("2").checked = false;
-		document.getElementById("3").checked = false;
-		document.getElementById("4").checked = false;
-		document.getElementById("5").checked = false;
+		return (bit4.yahtzee.rounds) === bit4.yahtzee.maxRounds;
 	};
 
 	bit4.yahtzee.resetDiceContainer = function () {
@@ -80,30 +69,31 @@ bit4.yahtzee = bit4.yahtzee || {};
 		document.getElementById("d2").src = "images/diceBlank.gif";
 		document.getElementById("d3").src = "images/diceBlank.gif";
 		document.getElementById("d4").src = "images/diceBlank.gif";
-		document.getElementById("d5").src = "images/diceBlank.gif";			
+		document.getElementById("d5").src = "images/diceBlank.gif";
+	};
+
+	bit4.yahtzee.unmarkDice = function () {
+		document.getElementById("d1").className = "unfrozen";
+		document.getElementById("d2").className = "unfrozen";
+		document.getElementById("d3").className = "unfrozen";
+		document.getElementById("d4").className = "unfrozen";
+		document.getElementById("d5").className = "unfrozen";
 	};
 
 	bit4.yahtzee.clearForNextRoll = function () {
 		bit4.yahtzee.resetRollsCounter();
-		bit4.yahtzee.clearCheckboxes();
 		bit4.yahtzee.resetDiceContainer();
 		bit4.yahtzee.clearDiceImages();
-		bit4.yahtzee.lockCheckboxes();
+		bit4.yahtzee.unmarkDice();
 		bit4.yahtzee.gameState = "roll";
 
 		if (bit4.yahtzee.gameIsOver()) {
 			bit4.yahtzee.gameOver = true;
 			bit4.yahtzee.gameState = "game_over";
 			bit4.yahtzee.rolls = 0; // this will lock the game down
+			bit4.yahtzee.clearDiceImages();
+			bit4.yahtzee.unmarkDice();
 		}		
-	};
-
-	bit4.yahtzee.lockCheckboxes = function () {
-		bit4.yahtzee.checkboxesAreLocked = true;
-	};
-
-	bit4.yahtzee.unlockCheckboxes = function () {
-		bit4.yahtzee.checkboxesAreLocked = false;
 	};
 
 	bit4.yahtzee.roll = function () {
@@ -112,12 +102,9 @@ bit4.yahtzee = bit4.yahtzee || {};
 		if (bit4.yahtzee.rolls === 0) {
 			return;	}
 
-		if (bit4.yahtzee.checkboxesAreLocked) {
-			bit4.yahtzee.unlockCheckboxes(); }
-
 		// roll the dice
 		for (i = 1; i < bit4.yahtzee.diceToBeRolled.length; i++) {
-			if (bit4.yahtzee.diceToBeRolled[i] !== undefined) {
+			if (bit4.yahtzee.diceToBeRolled[i] !== 0) {
 				die = document.getElementById("d" + i);
 				roll = bit4.dice.roll1(6);
 				bit4.yahtzee.dieValues[i] = roll; // save die value for quick lookup later
@@ -132,22 +119,60 @@ bit4.yahtzee = bit4.yahtzee || {};
 		}
 	};
 
-	bit4.yahtzee.keepThisDie = function (checkbox) {
-		var id;
+	bit4.yahtzee.keepThisDie = function (img, num) {
+		var id = +num;
 
-		// return if checkboxes are locked
-		if (bit4.yahtzee.checkboxesAreLocked) {
-			checkbox.checked = false;
+		if (bit4.yahtzee.rolls === bit4.yahtzee.maxRolls) {
 			return; }
 
-		id = checkbox.id;
-
-		if (checkbox.checked === true) {
-			delete bit4.yahtzee.diceToBeRolled[id];
+		if (bit4.yahtzee.diceToBeRolled[num] === id) {
+			bit4.yahtzee.diceToBeRolled[id] = 0;			
+			bit4.yahtzee.removeClassName(img, "unfrozen");
+			bit4.yahtzee.addClassName(img, "frozen");
 			return; }
 
-		if (checkbox.checked === false) {
-			bit4.yahtzee.diceToBeRolled[id] = id; }
+		if (bit4.yahtzee.diceToBeRolled[id] === 0) {
+			bit4.yahtzee.diceToBeRolled[id] = id;			
+			bit4.yahtzee.removeClassName(img, "frozen");
+			bit4.yahtzee.addClassName(img, "unfrozen");	}
+	};
+
+	bit4.yahtzee.containsClassName = function (e, name) {
+		var i,
+				classNames;
+
+		classNames = e.className.split(/\s/);
+
+		for (i = 0; i < classNames.length; i++) {
+			if (classNames[i] === name) {
+				return true; } }
+
+		return false; 
+	};
+
+	bit4.yahtzee.removeClassName = function (e, name) {
+		var i,
+				len,
+				classNames;
+
+		if (bit4.yahtzee.containsClassName(e, name) === false) {
+			return; }
+
+		classNames = e.className.split(/\s/);
+		
+		for (i = 0, len = classNames.length; i < len; i++) {
+			if (classNames[i] === name) {
+				classNames.splice(i, 1);
+				e.className = classNames.join(" ");
+				return; } }
+	};
+
+	bit4.yahtzee.addClassName = function (e, name) {
+		if (bit4.yahtzee.containsClassName(e, name) === false) {
+			if (e.className === "") {
+				e.className = name; }
+			else {
+				e.className = e.className + " " + name; } }
 	};
 
 	bit4.yahtzee.getDiceTotal = function () {
@@ -213,10 +238,6 @@ bit4.yahtzee = bit4.yahtzee || {};
 
 		if (bit4.yahtzee.rolls === bit4.yahtzee.maxRolls) {
 			return; }
-
-		bit4.yahtzee.roundCnt++;
-
-		bit4.yahtzee.unlockCheckboxes();		
 
 		updateLowerTotal = function () {
 			var total = bit4.yahtzee.calculateLowerTotal();
@@ -297,6 +318,7 @@ bit4.yahtzee = bit4.yahtzee || {};
 		updateLowerTotal();
 		bit4.yahtzee.updateGrandTotal();
 		bit4.yahtzee.clearForNextRoll();
+		bit4.yahtzee.roundCnt++;
 	};
 
 	bit4.yahtzee.applyUpperSectionPoints = function (name) {
@@ -309,8 +331,6 @@ bit4.yahtzee = bit4.yahtzee || {};
 
 		if (bit4.yahtzee.rolls === bit4.yahtzee.maxRolls) {
 			return; }
-
-		bit4.yahtzee.unlockCheckboxes();
 
 		updateUpperTotal = function () {
 			var total = bit4.yahtzee.calculateUpperTotal();
@@ -371,7 +391,8 @@ bit4.yahtzee = bit4.yahtzee || {};
 		bit4.yahtzee.updateGUIscore(name, score);
 		updateUpperTotal();
 		bit4.yahtzee.updateGrandTotal();
-		bit4.yahtzee.clearForNextRoll();		
+		bit4.yahtzee.clearForNextRoll();
+		bit4.yahtzee.roundCnt++;
 	};
 
 }());

@@ -17,6 +17,11 @@ h1, h3 {
 	margin: 0px;
 	}
 
+img:hover {
+	-webkit-transform: scale(1.5, 1.5);
+	-moz-transform: scale(1.5, 1.5);
+	}
+
 #container {
 	width: 400px;
 	padding: 10px;
@@ -74,4 +79,12 @@ h1, h3 {
 
 .score {
 	float: right;
+	}
+
+.frozen {
+	border: 2px solid black;
+	}
+
+.unfrozen {
+	border: 2px solid gray;
 	}

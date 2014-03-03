@@ -38,25 +38,14 @@
 
 		</section>
 
-		<section id="diceSection">
-			<table>
-			<tr>
-				<td><img id="d1" src="images/diceBlank.gif" title="check box below to keep"></td>
-				<td><img id="d2" src="images/diceBlank.gif" title="check box below to keep"></td>
-				<td><img id="d3" src="images/diceBlank.gif" title="check box below to keep"></td>
-				<td><img id="d4" src="images/diceBlank.gif" title="check box below to keep"></td>
-				<td><img id="d5" src="images/diceBlank.gif" title="check box below to keep"></td>
-				<td><input type="button" value="Roll" onClick="bit4.yahtzee.roll()"></td>
-			</tr>
-			<tr>
-				<td><input id="1" type="checkbox" title="keep" onClick="bit4.yahtzee.keepThisDie(this)"></td>
-				<td><input id="2"  type="checkbox" title="keep" onClick="bit4.yahtzee.keepThisDie(this)"></td>
-				<td><input id="3"  type="checkbox" title="keep" onClick="bit4.yahtzee.keepThisDie(this)"></td>
-				<td><input id="4"  type="checkbox" title="keep" onClick="bit4.yahtzee.keepThisDie(this)"></td>
-				<td><input id="5"  type="checkbox" title="keep" onClick="bit4.yahtzee.keepThisDie(this)"></td>				
-				<td><h1><span id="rollsLeft">3</span></h1></td>				
-			</tr>
-			</table>
+		<section id="diceSection">			
+				<img class="unfrozen" id="d1" src="images/diceBlank.gif" onClick="bit4.yahtzee.keepThisDie(this, '1')">
+				<img class="unfrozen" id="d2" src="images/diceBlank.gif" onClick="bit4.yahtzee.keepThisDie(this, '2')">
+				<img class="unfrozen" id="d3" src="images/diceBlank.gif" onClick="bit4.yahtzee.keepThisDie(this, '3')">
+				<img class="unfrozen" id="d4" src="images/diceBlank.gif" onClick="bit4.yahtzee.keepThisDie(this, '4')">
+				<img class="unfrozen" id="d5" src="images/diceBlank.gif" onClick="bit4.yahtzee.keepThisDie(this, '5')">
+				<input type="button" value="Roll" onClick="bit4.yahtzee.roll()">
+				<h1><span id="rollsLeft">3</span></h1>
 		</section>
 
 		<footer>
