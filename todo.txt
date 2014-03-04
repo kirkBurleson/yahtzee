@@ -1,6 +1,0 @@
--Color each score red, white, or green:
-	red, if score is below the die times 3 (sixes - under 18)
-	green, if score is above the die times 3 (sixes - above 18)
-	white, if score is exantly the die times 3
-
--Create custom "roll" button
