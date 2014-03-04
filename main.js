@@ -2,7 +2,6 @@ var bit4 = bit4 || {};
 bit4.yahtzee = bit4.yahtzee || {};
 
 (function () {
-	bit4.yahtzee.checkForYahtzee = false;
 	bit4.yahtzee.msgPointer;
 	bit4.yahtzee.intervalID;
 	bit4.yahtzee.gameOver = false;
@@ -17,24 +16,24 @@ bit4.yahtzee = bit4.yahtzee || {};
 	bit4.yahtzee.upper = {};
 	bit4.yahtzee.lower = {};
 	bit4.yahtzee.upper.scores = {
-		ones: 0,
-		twos: 0,
-		threes: 0,
-		fours: 0,
-		fives: 0,
-		sixes: 0,
-		bonus: 0,
-		total: 0};	
+		ones:   {score: 0, scored: false},
+		twos:   {score: 0, scored: false},
+		threes: {score: 0, scored: false},
+		fours:  {score: 0, scored: false},
+		fives:  {score: 0, scored: false},
+		sixes:  {score: 0, scored: false},
+		bonus:  0,
+		total:  0 };	
 	bit4.yahtzee.lower.scores = {
-		threeOfKind: 0,
-		fourOfKind: 0,
-		fullHouse: 0,
-		smStr: 0,
-		lgStr: 0,
-		yahtzee: 0,
-		bonusYahtzee: 0,
-		chance: 0,
-		total: 0};	
+		threeOfKind:  {score: 0, scored: false},
+		fourOfKind:   {score: 0, scored: false},
+		fullHouse:    {score: 0, scored: false},
+		smStr:        {score: 0, scored: false},
+		lgStr:        {score: 0, scored: false},
+		yahtzee:      {score: 0, scored: false},
+		bonusYahtzee: {score: 0, scored: false},
+		chance:       {score: 0, scored: false},
+		total:        0 };	
 
 	// start the message system
 	(function () {
@@ -197,8 +196,8 @@ bit4.yahtzee = bit4.yahtzee || {};
 		bonus = 0;
 		scores = bit4.yahtzee.upper.scores;
 
-		total = scores.ones + scores.twos + scores.threes +
-					  scores.fours + scores.fives + scores.sixes;
+		total = scores.ones.score + scores.twos.score + scores.threes.score +
+					  scores.fours.score + scores.fives.score + scores.sixes.score;
 
 		if (total >= 63) {
 			bonus = 35;
@@ -215,9 +214,9 @@ bit4.yahtzee = bit4.yahtzee || {};
 
 		scores = bit4.yahtzee.lower.scores;
 
-		total = scores.threeOfKind + scores.fourOfKind + scores.fullHouse +
-						scores.smStr + scores.lgStr + scores.yahtzee +
-						scores.bonusYahtzee + scores.chance;
+		total = scores.threeOfKind.score + scores.fourOfKind.score + scores.fullHouse.score +
+						scores.smStr.score + scores.lgStr.score + scores.yahtzee.score +
+						scores.bonusYahtzee.score + scores.chance.score;
 
 		return total;
 	};
@@ -258,20 +257,31 @@ bit4.yahtzee = bit4.yahtzee || {};
 
 		switch (name) {
 			case "3kind":
+				if (bit4.yahtzee.lower.scores.threeOfKind.scored === true) {
+					return; }
+
 				for (i = 1; i < count.length; i++) {
 					if (count[i] >= 3) {
 						score = bit4.yahtzee.getDiceTotal();
-						bit4.yahtzee.lower.scores.threeOfKind = score; }}
+						bit4.yahtzee.lower.scores.threeOfKind.score = score;
+						bit4.yahtzee.lower.scores.threeOfKind.scored = true; }}
 				break;
 
 			case "4kind":
+				if (bit4.yahtzee.lower.scores.fourOfKind.scored === true) {
+					return; }
+
 				for (i = 1; i < count.length; i++) {
 					if (count[i] >= 4) {
 						score = bit4.yahtzee.getDiceTotal();
-						bit4.yahtzee.lower.scores.fourOfKind = score; }}
+						bit4.yahtzee.lower.scores.fourOfKind.score = score;
+						bit4.yahtzee.lower.scores.fourOfKind.scored = true; }}
 				break;
 
 			case "fh":
+				if (bit4.yahtzee.lower.scores.fullHouse.scored === true) {
+					return; }
+
 				fullHouse = 0;
 
 				for (i = 1; i < count.length; i++) {
@@ -282,43 +292,70 @@ bit4.yahtzee = bit4.yahtzee || {};
 
 				if (fullHouse === 5) {
 					score = 25;
-					bit4.yahtzee.lower.scores.fullHouse = score; }
+					bit4.yahtzee.lower.scores.fullHouse.score = score;
+					bit4.yahtzee.lower.scores.fullHouse.scored = true; }
 				break;
 
 			case "smst":
+				if (bit4.yahtzee.lower.scores.smStr.scored === true) {
+					return; }
+
 				if (count[3] > 0 && count[4] > 0) {
 					if ((count[5] > 0 && count[6] > 0) ||
 							(count[1] > 0 && count[2] > 0) ||
 							(count[2] > 0 && count[5] > 0)) {
 								score = 30;
-								bit4.yahtzee.lower.scores.smStr = score; }}
+								bit4.yahtzee.lower.scores.smStr.score = score;
+								bit4.yahtzee.lower.scores.smStr.scored = true; }}
 				break;
 
 			case "lgst":
+			if (bit4.yahtzee.lower.scores.lgStr.scored === true) {
+					return; }
+
 				if (count[2] > 0 && count[3] > 0 && count[4] > 0 && count[5] > 0) {
 					if (count[1] > 0 || count[6] > 0) {
 							score = 40;
-							bit4.yahtzee.lower.scores.lgStr = score; }}
+							bit4.yahtzee.lower.scores.lgStr.score = score;
+							bit4.yahtzee.lower.scores.lgStr.scored = true; }}
 				break;
 
 			case "y":
-				if (hasYahtzee()) {
-						score = 50;
-						bit4.yahtzee.lower.scores.yahtzee = score;
-						bit4.yahtzee.checkForYahtzee = true; }
+				if (bit4.yahtzee.lower.scores.yahtzee.scored === true) {
+						return; }
+
+				if (hasYahtzee() === true) {
+					score = 50;
+					bit4.yahtzee.lower.scores.yahtzee.score = score;
+					bit4.yahtzee.lower.scores.yahtzee.scored = true;
+					bit4.yahtzee.removeClassName(document.getElementById("xydiv"), "hidden"); }
+				break;
+
+			case "xy":
+				if (hasYahtzee() === false) {
+					return; }
+
+				score = 100;
+				bit4.yahtzee.lower.scores.bonusYahtzee.score += score;
+				bit4.yahtzee.lower.scores.bonusYahtzee.scored = true;
+				bit4.yahtzee.maxRounds++;
 				break;
 
 			case "ch":
+				if (bit4.yahtzee.lower.scores.chance.scored === true) {
+					return; }
+
 				score = bit4.yahtzee.getDiceTotal();
-				bit4.yahtzee.lower.scores.chance = score;
+				bit4.yahtzee.lower.scores.chance.score = score;
+				bit4.yahtzee.lower.scores.chance.scored = true;
 				break;
 		}
 
+		bit4.yahtzee.rounds++;
 		bit4.yahtzee.updateGUIscore(name, score);
 		updateLowerTotal();
 		bit4.yahtzee.updateGrandTotal();
 		bit4.yahtzee.clearForNextRoll();
-		bit4.yahtzee.roundCnt++;
 	};
 
 	bit4.yahtzee.applyUpperSectionPoints = function (name) {
@@ -340,59 +377,83 @@ bit4.yahtzee = bit4.yahtzee || {};
 		score = 0;
 		switch (name) {
 			case "ones":
+				if (bit4.yahtzee.upper.scores.ones.scored === true) {
+					return; }
+
 				for (i = 1; i < bit4.yahtzee.dieValues.length; i++) {
 					if (bit4.yahtzee.dieValues[i] === 1) {
 						score++; }}
 
-				bit4.yahtzee.upper.scores.ones = score;
+				bit4.yahtzee.upper.scores.ones.score = score;
+				bit4.yahtzee.upper.scores.ones.scored = true;
 				break;
 
 			case "twos":
+				if (bit4.yahtzee.upper.scores.twos.scored === true) {
+					return; }
+
 				for (i = 1; i < bit4.yahtzee.dieValues.length; i++) {
 					if (bit4.yahtzee.dieValues[i] === 2) {
 						score += 2; }}
 
-				bit4.yahtzee.upper.scores.twos = score;
+				bit4.yahtzee.upper.scores.twos.score = score;
+				bit4.yahtzee.upper.scores.twos.scored = true;
 				break;
 
 			case "threes":
+				if (bit4.yahtzee.upper.scores.threes.scored === true) {
+					return; }
+
 				for (i = 1; i < bit4.yahtzee.dieValues.length; i++) {
 					if (bit4.yahtzee.dieValues[i] === 3) {
 						score += 3; }}
 
-				bit4.yahtzee.upper.scores.threes = score;
+				bit4.yahtzee.upper.scores.threes.score = score;
+				bit4.yahtzee.upper.scores.threes.scored = true;
 				break;
 
 			case "fours":
+				if (bit4.yahtzee.upper.scores.fours.scored === true) {
+					return; }
+
 				for (i = 1; i < bit4.yahtzee.dieValues.length; i++) {
 					if (bit4.yahtzee.dieValues[i] === 4) {
 						score += 4; }}
 
-				bit4.yahtzee.upper.scores.fours = score;
+				bit4.yahtzee.upper.scores.fours.score = score;
+				bit4.yahtzee.upper.scores.fours.scored = true;
 				break;
 
 			case "fives":
+				if (bit4.yahtzee.upper.scores.fives.scored === true) {
+					return; }
+
 				for (i = 1; i < bit4.yahtzee.dieValues.length; i++) {
 					if (bit4.yahtzee.dieValues[i] === 5) {
 						score += 5; }}
 				
-				bit4.yahtzee.upper.scores.fives = score;
+				bit4.yahtzee.upper.scores.fives.score = score;
+				bit4.yahtzee.upper.scores.fives.scored = true;
 				break;
 
 			case "sixes":
+				if (bit4.yahtzee.upper.scores.sixes.scored === true) {
+					return; }
+
 				for (i = 1; i < bit4.yahtzee.dieValues.length; i++) {
 					if (bit4.yahtzee.dieValues[i] === 6) {
 						score += 6; }}
 				
-				bit4.yahtzee.upper.scores.sixes = score;				
+				bit4.yahtzee.upper.scores.sixes.score = score;
+				bit4.yahtzee.upper.scores.sixes.scored = true;
 				break;
 		}
 
+		bit4.yahtzee.rounds++;
 		bit4.yahtzee.updateGUIscore(name, score);
 		updateUpperTotal();
 		bit4.yahtzee.updateGrandTotal();
 		bit4.yahtzee.clearForNextRoll();
-		bit4.yahtzee.roundCnt++;
 	};
 
 }());

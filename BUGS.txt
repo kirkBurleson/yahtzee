@@ -1,4 +1,2 @@
 BUGS:
 
-001:FIXED- not finding small straight with 4 fives and a 1
-002: can apply score to target that already has a score recorded.
