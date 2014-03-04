@@ -17,11 +17,6 @@ h1, h3 {
 	margin: 0px;
 	}
 
-img:hover {
-	-webkit-transform: scale(1.5, 1.5);
-	-moz-transform: scale(1.5, 1.5);
-	}
-
 #container {
 	width: 400px;
 	padding: 10px;
@@ -54,6 +49,32 @@ img:hover {
 #diceSection img {
 	border-radius: 5px;
 	}
+
+#diceSection img:not(.no_transform):hover {	
+	-webkit-transform: scale(1.5);
+	-moz-transform: scale(1.5);	
+	-o-transform: scale(1.5);
+	-ms-transform: scale(1.5);
+	transform: scale(1.5);
+	}
+
+#roll {
+	margin-bottom: 9px;
+	}
+
+#roll:active {
+	-webkit-transform: translate(1px,2px);
+	-moz-transform: translate(1px,2px);
+	-o-transform: translate(1px,2px);
+	-ms-transform: translate(1px,2px);
+	transform: translate(1px,2px);
+	}
+
+#roll:hover {
+	cursor: pointer;
+	}
+
+
 
 /* classes --------------------------- */
 
