@@ -222,7 +222,10 @@ bit4.yahtzee = bit4.yahtzee || {};
 	};
 
 	bit4.yahtzee.updateGUIscore = function (name, score) {
-		document.getElementById(name).innerHTML = score;
+		var element;
+
+		element = document.getElementById(name)
+		element.innerHTML = score;
 	};
 
 	bit4.yahtzee.applyLowerSectionPoints = function (name) {
@@ -390,7 +393,7 @@ bit4.yahtzee = bit4.yahtzee || {};
 						score++; }}
 
 				bit4.yahtzee.upper.scores.ones.score = score;
-				bit4.yahtzee.upper.scores.ones.scored = true;
+				bit4.yahtzee.upper.scores.ones.scored = true;	
 				break;
 
 			case "twos":
