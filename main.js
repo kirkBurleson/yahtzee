@@ -262,9 +262,9 @@ bit4.yahtzee = bit4.yahtzee || {};
 
 				for (i = 1; i < count.length; i++) {
 					if (count[i] >= 3) {
-						score = bit4.yahtzee.getDiceTotal();
-						bit4.yahtzee.lower.scores.threeOfKind.score = score;
-						bit4.yahtzee.lower.scores.threeOfKind.scored = true; }}
+						score = bit4.yahtzee.getDiceTotal(); }
+					bit4.yahtzee.lower.scores.threeOfKind.score = score;
+					bit4.yahtzee.lower.scores.threeOfKind.scored = true; }
 				break;
 
 			case "4kind":
@@ -273,9 +273,10 @@ bit4.yahtzee = bit4.yahtzee || {};
 
 				for (i = 1; i < count.length; i++) {
 					if (count[i] >= 4) {
-						score = bit4.yahtzee.getDiceTotal();
-						bit4.yahtzee.lower.scores.fourOfKind.score = score;
-						bit4.yahtzee.lower.scores.fourOfKind.scored = true; }}
+						score = bit4.yahtzee.getDiceTotal(); }
+
+					bit4.yahtzee.lower.scores.fourOfKind.score = score;
+					bit4.yahtzee.lower.scores.fourOfKind.scored = true; }
 				break;
 
 			case "fh":
@@ -288,12 +289,13 @@ bit4.yahtzee = bit4.yahtzee || {};
 					if (count[i] === 2) {
 						fullHouse += 2; }
 					if (count[i] === 3) {
-						fullHouse += 3; }}
+						fullHouse += 3; } }
 
 				if (fullHouse === 5) {
-					score = 25;
-					bit4.yahtzee.lower.scores.fullHouse.score = score;
-					bit4.yahtzee.lower.scores.fullHouse.scored = true; }
+					score = 25; }
+
+				bit4.yahtzee.lower.scores.fullHouse.score = score;
+				bit4.yahtzee.lower.scores.fullHouse.scored = true;
 				break;
 
 			case "smst":
@@ -304,9 +306,10 @@ bit4.yahtzee = bit4.yahtzee || {};
 					if ((count[5] > 0 && count[6] > 0) ||
 							(count[1] > 0 && count[2] > 0) ||
 							(count[2] > 0 && count[5] > 0)) {
-								score = 30;
-								bit4.yahtzee.lower.scores.smStr.score = score;
-								bit4.yahtzee.lower.scores.smStr.scored = true; }}
+								score = 30; } }
+
+				bit4.yahtzee.lower.scores.smStr.score = score;
+				bit4.yahtzee.lower.scores.smStr.scored = true;
 				break;
 
 			case "lgst":
@@ -315,9 +318,10 @@ bit4.yahtzee = bit4.yahtzee || {};
 
 				if (count[2] > 0 && count[3] > 0 && count[4] > 0 && count[5] > 0) {
 					if (count[1] > 0 || count[6] > 0) {
-							score = 40;
-							bit4.yahtzee.lower.scores.lgStr.score = score;
-							bit4.yahtzee.lower.scores.lgStr.scored = true; }}
+							score = 40; } }
+
+				bit4.yahtzee.lower.scores.lgStr.score = score;
+				bit4.yahtzee.lower.scores.lgStr.scored = true;
 				break;
 
 			case "y":
@@ -325,10 +329,11 @@ bit4.yahtzee = bit4.yahtzee || {};
 						return; }
 
 				if (hasYahtzee() === true) {
-					score = 50;
-					bit4.yahtzee.lower.scores.yahtzee.score = score;
-					bit4.yahtzee.lower.scores.yahtzee.scored = true;
+					score = 50;					
 					bit4.yahtzee.removeClassName(document.getElementById("xydiv"), "hidden"); }
+
+				bit4.yahtzee.lower.scores.yahtzee.score = score;
+				bit4.yahtzee.lower.scores.yahtzee.scored = true;
 				break;
 
 			case "xy":
