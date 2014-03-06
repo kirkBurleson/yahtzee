@@ -3,6 +3,7 @@ bit4.yahtzee = bit4.yahtzee || {};
 
 (function () {
 	bit4.yahtzee.msgPointer;
+	bit4.yahtzee.hi = 0;
 	bit4.yahtzee.intervalID;
 	bit4.yahtzee.gameOver = false;
 	bit4.yahtzee.gameState = "roll";
@@ -79,6 +80,13 @@ bit4.yahtzee = bit4.yahtzee || {};
 		document.getElementById("d5").className = "unfrozen";
 	};
 
+	bit4.yahtzee.updateHiScore = function () {
+		var score = Number(document.getElementById("gt").innerHTML);
+		if (score > bit4.yahtzee.hi) {
+			bit4.yahtzee.hi = score;
+			document.getElementById("hi").innerHTML = bit4.yahtzee.hi; }
+	};
+
 	bit4.yahtzee.clearForNextRoll = function () {
 		bit4.yahtzee.resetRollsCounter();
 		bit4.yahtzee.resetDiceContainer();
@@ -92,6 +100,7 @@ bit4.yahtzee = bit4.yahtzee || {};
 			bit4.yahtzee.rolls = 0; // this will lock the game down
 			bit4.yahtzee.clearDiceImages();
 			bit4.yahtzee.unmarkDice();
+			bit4.yahtzee.updateHiScore();
 		}		
 	};
 
