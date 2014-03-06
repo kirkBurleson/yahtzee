@@ -32,7 +32,7 @@
 				<div class="rightSide"> <span class="canClick roundCorners" onClick="bit4.yahtzee.applyLowerSectionPoints('smst')">Sm. Straight</span>  <span id="smst" class="score">-</span>  </div>
 				<div class="rightSide"> <span class="canClick roundCorners" onClick="bit4.yahtzee.applyLowerSectionPoints('lgst')">Lg. Straight</span>  <span id="lgst" class="score">-</span>  </div>
 				<div class="rightSide"> <span class="canClick roundCorners" onClick="bit4.yahtzee.applyLowerSectionPoints('y')">Yahtzee</span>          <span id="y" class="score">-</span>     </div>
-				<div class="rightSide hidden" id="xydiv"> <span class="canClick roundCorners" onClick="bit4.yahtzee.applyLowerSectionPoints('xy')">Extra Yahtzee</span>   <span id="xy" class="score">-</span>    </div>
+				<div class="rightSide hidden" id="xydiv"> <span class="canClick roundCorners" onClick="bit4.yahtzee.applyLowerSectionPoints('xy')">Extra Yahtzee</span>   <span id="xy" class="score">-</span> </div>
 				<div class="rightSide"> <span class="canClick roundCorners" onClick="bit4.yahtzee.applyLowerSectionPoints('ch')">Chance</span>          <span id="ch" class="score">-</span>    </div>
 				<div class="rightSide"> <span>Total</span>   <span id="lowerTotal" class="score">0</span> </div>
 			</section>
@@ -47,6 +47,10 @@
 				<img class="unfrozen" id="d5" src="images/diceBlank.gif" onClick="bit4.yahtzee.keepThisDie(this, '5')">
 				<img class="no_transform" id="roll" src="images/roll.png" onClick="bit4.yahtzee.roll()"></img>
 				<h1 id="rollsLeftContainer"><span id="rollsLeft" title="Number of rolls left">3</span></h1>
+		</section>
+
+		<section class="hidden" id="playAgain">
+			<center><input type="button" value="Play again" onClick="bit4.yahtzee.clearForNewGame()"></center>
 		</section>
 
 		<footer>

@@ -37,7 +37,7 @@ bit4.yahtzee = bit4.yahtzee || {};
 		total:        0 };	
 
 	// start the message system
-	(function () {
+	bit4.yahtzee.startMsgSystem = function () {
 		bit4.yahtzee.msgPointer = document.getElementById("msgBox");
 		bit4.yahtzee.intervalID = setInterval(function () {
 			var state = bit4.yahtzee.gameState;
@@ -49,7 +49,8 @@ bit4.yahtzee = bit4.yahtzee || {};
 				bit4.yahtzee.msgPointer.innerHTML = "GAME OVER";
 				clearInterval(bit4.yahtzee.intervalID); }
 		}, 1000);
-	}());
+	};
+	bit4.yahtzee.startMsgSystem();
 
 	bit4.yahtzee.resetRollsCounter = function () {
 		bit4.yahtzee.rolls = bit4.yahtzee.maxRolls;
@@ -80,6 +81,85 @@ bit4.yahtzee = bit4.yahtzee || {};
 		document.getElementById("d5").className = "unfrozen";
 	};
 
+	bit4.yahtzee.clearForNewGame = function () {
+		var namespace = bit4.yahtzee,
+				upper = bit4.yahtzee.upper.scores,
+				lower = bit4.yahtzee.lower.scores;
+
+		upper.ones.score = 0;
+		upper.ones.scored = false;
+		upper.twos.score = 0;
+		upper.twos.scored = false;
+		upper.threes.score = 0;
+		upper.threes.scored = false;
+		upper.fours.score = 0;
+		upper.fours.scored = false;
+		upper.fives.score = 0;
+		upper.fives.scored = false;
+		upper.sixes.score = 0;
+		upper.sixes.scored = false;
+		upper.bonus = 0;
+		upper.total = 0;
+
+		lower.threeOfKind.score = 0;
+		lower.threeOfKind.scored = false;
+		lower.fourOfKind.score = 0;
+		lower.fourOfKind.scored = false;
+		lower.fullHouse.score = 0;
+		lower.fullHouse.scored = false;
+		lower.smStr.score = 0;
+		lower.smStr.scored = false;
+		lower.lgStr.score = 0;
+		lower.lgStr.scored = false;
+		lower.yahtzee.score = 0;
+		lower.yahtzee.scored = false;
+		lower.bonusYahtzee.score = 0;
+		lower.bonusYahtzee.scored = false;
+		lower.chance.score = 0;
+		lower.chance.scored = false;
+		lower.total = 0;
+
+		namespace.resetRollsCounter();
+		namespace.resetDiceContainer();
+		namespace.clearDiceImages();
+		namespace.unmarkDice();
+		namespace.gameState = "roll";
+		namespace.gameOver = false;
+		namespace.rounds = 0;
+		namespace.grandTotal = 0;
+		namespace.dieValues[0] = 0;
+		namespace.dieValues[1] = 0;
+		namespace.dieValues[2] = 0;
+		namespace.dieValues[3] = 0;
+		namespace.dieValues[4] = 0;
+		namespace.dieValues[5] = 0;
+
+		document.getElementById("gt").innerHTML = "000";
+		document.getElementById("ones").innerHTML = "-";
+		document.getElementById("twos").innerHTML = "-";
+		document.getElementById("threes").innerHTML = "-";
+		document.getElementById("fours").innerHTML = "-";
+		document.getElementById("fives").innerHTML = "-";
+		document.getElementById("sixes").innerHTML = "-";
+		document.getElementById("bonus").innerHTML = "0";
+		document.getElementById("upperTotal").innerHTML = "0";
+
+		document.getElementById("3kind").innerHTML = "-";
+		document.getElementById("4kind").innerHTML = "-";
+		document.getElementById("fh").innerHTML = "-";
+		document.getElementById("smst").innerHTML = "-";
+		document.getElementById("lgst").innerHTML = "-";
+		document.getElementById("y").innerHTML = "-";
+		document.getElementById("xy").innerHTML = "-";
+		namespace.addClassName(document.getElementById("xydiv"), "hidden");
+		document.getElementById("ch").innerHTML = "-";
+		document.getElementById("lowerTotal").innerHTML = "0";
+
+		namespace.addClassName(document.getElementById("playAgain"), "hidden");
+
+		namespace.startMsgSystem();
+	};
+
 	bit4.yahtzee.updateHiScore = function () {
 		var score = Number(document.getElementById("gt").innerHTML);
 		if (score > bit4.yahtzee.hi) {
@@ -88,20 +168,20 @@ bit4.yahtzee = bit4.yahtzee || {};
 	};
 
 	bit4.yahtzee.clearForNextRoll = function () {
-		bit4.yahtzee.resetRollsCounter();
-		bit4.yahtzee.resetDiceContainer();
-		bit4.yahtzee.clearDiceImages();
-		bit4.yahtzee.unmarkDice();
-		bit4.yahtzee.gameState = "roll";
+		var namespace = bit4.yahtzee;
 
-		if (bit4.yahtzee.gameIsOver()) {
-			bit4.yahtzee.gameOver = true;
-			bit4.yahtzee.gameState = "game_over";
-			bit4.yahtzee.rolls = 0; // this will lock the game down
-			bit4.yahtzee.clearDiceImages();
-			bit4.yahtzee.unmarkDice();
-			bit4.yahtzee.updateHiScore();
-		}		
+		namespace.resetRollsCounter();
+		namespace.resetDiceContainer();
+		namespace.clearDiceImages();
+		namespace.unmarkDice();
+		namespace.gameState = "roll";
+
+		if (namespace.gameIsOver()) {
+			namespace.gameOver = true;
+			namespace.gameState = "game_over";
+			namespace.rolls = 0; // this will lock the game down
+			namespace.updateHiScore();
+			namespace.removeClassName(document.getElementById("playAgain"), "hidden"); }		
 	};
 
 	bit4.yahtzee.roll = function () {
