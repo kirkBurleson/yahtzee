@@ -126,6 +126,7 @@ bit4.yahtzee = bit4.yahtzee || {};
 		namespace.gameState = "roll";
 		namespace.gameOver = false;
 		namespace.rounds = 0;
+		namespace.maxRounds = 13;
 		namespace.grandTotal = 0;
 		namespace.dieValues[0] = 0;
 		namespace.dieValues[1] = 0;
