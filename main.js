@@ -34,7 +34,7 @@ bit4.yahtzee = bit4.yahtzee || {};
 		yahtzee:      {score: 0, scored: false},
 		bonusYahtzee: {score: 0, scored: false},
 		chance:       {score: 0, scored: false},
-		total:        0 };	
+		total:        0 };
 
 	// start the message system
 	bit4.yahtzee.startMsgSystem = function () {
@@ -50,8 +50,29 @@ bit4.yahtzee = bit4.yahtzee || {};
 				clearInterval(bit4.yahtzee.intervalID); }
 		}, 1000);
 	};
-	bit4.yahtzee.startMsgSystem();
+		
+	bit4.yahtzee.saveHighScore = function (score) {
+		if (localStorage) {
+			localStorage.setItem("bit4_yahtzee_hs", score); };
+	};
 
+	bit4.yahtzee.fetchHighScore = function () {
+		if (localStorage) {
+			return localStorage.getItem("bit4_yahtzee_hs"); }
+		else {
+			return null; }
+	};
+
+	bit4.yahtzee.loadHighScore = function () {
+		var score;
+		score = bit4.yahtzee.fetchHighScore();
+		if (score === null) {
+			return; }
+		else {
+			bit4.yahtzee.hi = score;
+			document.getElementById("hi").innerHTML = bit4.yahtzee.hi; }
+	};
+	
 	bit4.yahtzee.resetRollsCounter = function () {
 		bit4.yahtzee.rolls = bit4.yahtzee.maxRolls;
 		document.getElementById("rollsLeft").innerHTML = bit4.yahtzee.rolls;
@@ -165,7 +186,8 @@ bit4.yahtzee = bit4.yahtzee || {};
 		var score = Number(document.getElementById("gt").innerHTML);
 		if (score > bit4.yahtzee.hi) {
 			bit4.yahtzee.hi = score;
-			document.getElementById("hi").innerHTML = bit4.yahtzee.hi; }
+			document.getElementById("hi").innerHTML = bit4.yahtzee.hi;
+			bit4.yahtzee.saveHighScore(bit4.yahtzee.hi); }
 	};
 
 	bit4.yahtzee.clearForNextRoll = function () {
@@ -554,4 +576,6 @@ bit4.yahtzee = bit4.yahtzee || {};
 		bit4.yahtzee.clearForNextRoll();
 	};
 
+	bit4.yahtzee.startMsgSystem();
+	bit4.yahtzee.loadHighScore();
 }());
