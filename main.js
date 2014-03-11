@@ -86,6 +86,17 @@ bit4.yahtzee = bit4.yahtzee || {};
 		bit4.yahtzee.diceToBeRolled = [0,1,2,3,4,5];
 	};
 
+	bit4.yahtzee.resetDiceValueContainer = function () {
+		var namespace = bit4.yahtzee;
+
+		namespace.dieValues[0] = 0;
+		namespace.dieValues[1] = 0;
+		namespace.dieValues[2] = 0;
+		namespace.dieValues[3] = 0;
+		namespace.dieValues[4] = 0;
+		namespace.dieValues[5] = 0;
+	};
+
 	bit4.yahtzee.clearDiceImages = function () {
 		document.getElementById("d1").src = "images/diceBlank.gif";
 		document.getElementById("d2").src = "images/diceBlank.gif";
@@ -149,12 +160,7 @@ bit4.yahtzee = bit4.yahtzee || {};
 		namespace.rounds = 0;
 		namespace.maxRounds = 13;
 		namespace.grandTotal = 0;
-		namespace.dieValues[0] = 0;
-		namespace.dieValues[1] = 0;
-		namespace.dieValues[2] = 0;
-		namespace.dieValues[3] = 0;
-		namespace.dieValues[4] = 0;
-		namespace.dieValues[5] = 0;
+		namespace.resetDiceValueContainer();
 
 		document.getElementById("gt").innerHTML = "000";
 		document.getElementById("ones").innerHTML = "-";
@@ -195,6 +201,7 @@ bit4.yahtzee = bit4.yahtzee || {};
 
 		namespace.resetRollsCounter();
 		namespace.resetDiceContainer();
+		namespace.resetDiceValueContainer();
 		namespace.clearDiceImages();
 		namespace.unmarkDice();
 		namespace.gameState = "roll";
@@ -452,8 +459,7 @@ bit4.yahtzee = bit4.yahtzee || {};
 				break;
 
 			case "xy":
-				if (bit4.yahtzee.gameState === "game_over" ||
-						hasYahtzee() === false) {
+				if (hasYahtzee() === false) {
 					return; }
 
 				score = 100;
