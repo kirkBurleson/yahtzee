@@ -452,7 +452,8 @@ bit4.yahtzee = bit4.yahtzee || {};
 				break;
 
 			case "xy":
-				if (hasYahtzee() === false) {
+				if (bit4.yahtzee.gameState === "game_over" ||
+						hasYahtzee() === false) {
 					return; }
 
 				score = 100;
