@@ -2,21 +2,22 @@ var bit4 = bit4 || {};
 bit4.yahtzee = bit4.yahtzee || {};
 
 (function () {
-	bit4.yahtzee.msgPointer;
-	bit4.yahtzee.hi = 0;
-	bit4.yahtzee.intervalID;
-	bit4.yahtzee.gameOver = false;
-	bit4.yahtzee.gameState = "roll";
-	bit4.yahtzee.rounds = 0;
-	bit4.yahtzee.maxRounds = 13;
-	bit4.yahtzee.maxRolls = 3;
-	bit4.yahtzee.rolls = bit4.yahtzee.maxRolls;
-	bit4.yahtzee.grandTotal = 0;
-	bit4.yahtzee.diceToBeRolled = [0,1,2,3,4,5];
-	bit4.yahtzee.dieValues = [0,0,0,0,0,0];
-	bit4.yahtzee.upper = {};
-	bit4.yahtzee.lower = {};
-	bit4.yahtzee.upper.scores = {
+	var y = bit4.yahtzee;
+
+	y.hi = 0;
+	y.intervalID = null;
+	y.gameOver = false;
+	y.gameState = "roll";
+	y.rounds = 0;
+	y.maxRounds = 13;
+	y.maxRolls = 3;
+	y.rolls = y.maxRolls;
+	y.grandTotal = 0;
+	y.diceToBeRolled = [0,1,2,3,4,5];
+	y.dieValues = [0,0,0,0,0,0];
+	y.upper = {};
+	y.lower = {};
+	y.upper.scores = {
 		ones:   {score: 0, scored: false},
 		twos:   {score: 0, scored: false},
 		threes: {score: 0, scored: false},
@@ -25,7 +26,7 @@ bit4.yahtzee = bit4.yahtzee || {};
 		sixes:  {score: 0, scored: false},
 		bonus:  0,
 		total:  0 };	
-	bit4.yahtzee.lower.scores = {
+	y.lower.scores = {
 		threeOfKind:  {score: 0, scored: false},
 		fourOfKind:   {score: 0, scored: false},
 		fullHouse:    {score: 0, scored: false},
@@ -36,58 +37,57 @@ bit4.yahtzee = bit4.yahtzee || {};
 		chance:       {score: 0, scored: false},
 		total:        0 };
 
-	// start the message system
-	bit4.yahtzee.startMsgSystem = function () {
-		bit4.yahtzee.msgPointer = document.getElementById("msgBox");
-		bit4.yahtzee.intervalID = setInterval(function () {
-			var state = bit4.yahtzee.gameState;
+	y.startMsgSystem = function () {
+		y.msgPointer = document.getElementById("msgBox");
+		y.intervalID = setInterval(function () {
+			var state = y.gameState;
 			if (state === "roll") { 
-				bit4.yahtzee.msgPointer.innerHTML = "Roll the dice!";	}
+				y.msgPointer.innerHTML = "Roll the dice!";	}
 			else if (state === "apply") {
-				bit4.yahtzee.msgPointer.innerHTML = "Apply the score!"; }
+				y.msgPointer.innerHTML = "Apply the score!"; }
 			else if (state === "game_over") {
-				bit4.yahtzee.msgPointer.innerHTML = "GAME OVER";
-				clearInterval(bit4.yahtzee.intervalID); }
+				y.msgPointer.innerHTML = "GAME OVER";
+				clearInterval(y.intervalID); }
 		}, 1000);
 	};
 		
-	bit4.yahtzee.saveHighScore = function (score) {
+	y.saveHighScore = function (score) {
 		if (localStorage) {
 			localStorage.setItem("bit4_yahtzee_hs", score); };
 	};
 
-	bit4.yahtzee.fetchHighScore = function () {
+	y.fetchHighScore = function () {
 		if (localStorage) {
 			return localStorage.getItem("bit4_yahtzee_hs"); }
 		else {
 			return null; }
 	};
 
-	bit4.yahtzee.loadHighScore = function () {
+	y.loadHighScore = function () {
 		var score;
-		score = bit4.yahtzee.fetchHighScore();
+		score = y.fetchHighScore();
 		if (score === null) {
 			return; }
 		else {
-			bit4.yahtzee.hi = score;
-			document.getElementById("hi").innerHTML = bit4.yahtzee.hi; }
+			y.hi = score;
+			document.getElementById("hi").innerHTML = y.hi; }
 	};
 	
-	bit4.yahtzee.resetRollsCounter = function () {
-		bit4.yahtzee.rolls = bit4.yahtzee.maxRolls;
-		document.getElementById("rollsLeft").innerHTML = bit4.yahtzee.rolls;
+	y.resetRollsCounter = function () {
+		y.rolls = y.maxRolls;
+		document.getElementById("rollsLeft").innerHTML = y.rolls;
 	};
 
-	bit4.yahtzee.gameIsOver = function () {
-		return (bit4.yahtzee.rounds) === bit4.yahtzee.maxRounds;
+	y.gameIsOver = function () {
+		return (y.rounds) === y.maxRounds;
 	};
 
-	bit4.yahtzee.resetDiceContainer = function () {
-		bit4.yahtzee.diceToBeRolled = [0,1,2,3,4,5];
+	y.resetDiceContainer = function () {
+		y.diceToBeRolled = [0,1,2,3,4,5];
 	};
 
-	bit4.yahtzee.resetDiceValueContainer = function () {
-		var namespace = bit4.yahtzee;
+	y.resetDiceValueContainer = function () {
+		var namespace = y;
 
 		namespace.dieValues[0] = 0;
 		namespace.dieValues[1] = 0;
@@ -97,7 +97,7 @@ bit4.yahtzee = bit4.yahtzee || {};
 		namespace.dieValues[5] = 0;
 	};
 
-	bit4.yahtzee.clearDiceImages = function () {
+	y.clearDiceImages = function () {
 		document.getElementById("d1").src = "images/diceBlank.gif";
 		document.getElementById("d2").src = "images/diceBlank.gif";
 		document.getElementById("d3").src = "images/diceBlank.gif";
@@ -105,7 +105,7 @@ bit4.yahtzee = bit4.yahtzee || {};
 		document.getElementById("d5").src = "images/diceBlank.gif";
 	};
 
-	bit4.yahtzee.unmarkDice = function () {
+	y.unmarkDice = function () {
 		document.getElementById("d1").className = "unfrozen";
 		document.getElementById("d2").className = "unfrozen";
 		document.getElementById("d3").className = "unfrozen";
@@ -113,10 +113,9 @@ bit4.yahtzee = bit4.yahtzee || {};
 		document.getElementById("d5").className = "unfrozen";
 	};
 
-	bit4.yahtzee.clearForNewGame = function () {
-		var namespace = bit4.yahtzee,
-				upper = bit4.yahtzee.upper.scores,
-				lower = bit4.yahtzee.lower.scores;
+	y.clearForNewGame = function () {
+		var upper = y.upper.scores,
+				lower = y.lower.scores;
 
 		upper.ones.score = 0;
 		upper.ones.scored = false;
@@ -151,16 +150,16 @@ bit4.yahtzee = bit4.yahtzee || {};
 		lower.chance.scored = false;
 		lower.total = 0;
 
-		namespace.resetRollsCounter();
-		namespace.resetDiceContainer();
-		namespace.clearDiceImages();
-		namespace.unmarkDice();
-		namespace.gameState = "roll";
-		namespace.gameOver = false;
-		namespace.rounds = 0;
-		namespace.maxRounds = 13;
-		namespace.grandTotal = 0;
-		namespace.resetDiceValueContainer();
+		y.resetRollsCounter();
+		y.resetDiceContainer();
+		y.clearDiceImages();
+		y.unmarkDice();
+		y.gameState = "roll";
+		y.gameOver = false;
+		y.rounds = 0;
+		y.maxRounds = 13;
+		y.grandTotal = 0;
+		y.resetDiceValueContainer();
 
 		document.getElementById("gt").innerHTML = "000";
 		document.getElementById("ones").innerHTML = "-";
@@ -179,83 +178,81 @@ bit4.yahtzee = bit4.yahtzee || {};
 		document.getElementById("lgst").innerHTML = "-";
 		document.getElementById("y").innerHTML = "-";
 		document.getElementById("xy").innerHTML = "-";
-		namespace.addClassName(document.getElementById("xydiv"), "hidden");
+		y.addClassName(document.getElementById("xydiv"), "hidden");
 		document.getElementById("ch").innerHTML = "-";
 		document.getElementById("lowerTotal").innerHTML = "0";
 
-		namespace.addClassName(document.getElementById("playAgain"), "hidden");
+		y.addClassName(document.getElementById("playAgain"), "hidden");
 
-		namespace.startMsgSystem();
+		y.startMsgSystem();
 	};
 
-	bit4.yahtzee.updateHiScore = function () {
+	y.updateHiScore = function () {
 		var score = Number(document.getElementById("gt").innerHTML);
-		if (score > bit4.yahtzee.hi) {
-			bit4.yahtzee.hi = score;
-			document.getElementById("hi").innerHTML = bit4.yahtzee.hi;
-			bit4.yahtzee.saveHighScore(bit4.yahtzee.hi); }
+		if (score > y.hi) {
+			y.hi = score;
+			document.getElementById("hi").innerHTML = y.hi;
+			y.saveHighScore(y.hi); }
 	};
 
-	bit4.yahtzee.clearForNextRoll = function () {
-		var namespace = bit4.yahtzee;
+	y.clearForNextRoll = function () {
+		y.resetRollsCounter();
+		y.resetDiceContainer();
+		y.resetDiceValueContainer();
+		y.clearDiceImages();
+		y.unmarkDice();
+		y.gameState = "roll";
 
-		namespace.resetRollsCounter();
-		namespace.resetDiceContainer();
-		namespace.resetDiceValueContainer();
-		namespace.clearDiceImages();
-		namespace.unmarkDice();
-		namespace.gameState = "roll";
-
-		if (namespace.gameIsOver()) {
-			namespace.gameOver = true;
-			namespace.gameState = "game_over";
-			namespace.rolls = 0; // this will lock the game down
-			namespace.updateHiScore();
-			namespace.removeClassName(document.getElementById("playAgain"), "hidden"); }		
+		if (y.gameIsOver()) {
+			y.gameOver = true;
+			y.gameState = "game_over";
+			y.rolls = 0; // this will lock the game down
+			y.updateHiScore();
+			y.removeClassName(document.getElementById("playAgain"), "hidden"); }		
 	};
 
-	bit4.yahtzee.roll = function () {
+	y.roll = function () {
 		var i, die, roll;
 
-		if (bit4.yahtzee.rolls === 0) {
+		if (y.rolls === 0) {
 			return;	}
 
 		// roll the dice
-		for (i = 1; i < bit4.yahtzee.diceToBeRolled.length; i++) {
-			if (bit4.yahtzee.diceToBeRolled[i] !== 0) {
+		for (i = 1; i < y.diceToBeRolled.length; i++) {
+			if (y.diceToBeRolled[i] !== 0) {
 				die = document.getElementById("d" + i);
 				roll = bit4.dice.roll1(6);
-				bit4.yahtzee.dieValues[i] = roll; // save die value for quick lookup later
+				y.dieValues[i] = roll; // save die value for quick lookup later
 				die.src = "images/dice" + roll + ".gif"; } }
 
 		// adjust roll count
-		bit4.yahtzee.rolls--;
-		document.getElementById("rollsLeft").innerHTML = bit4.yahtzee.rolls;		
+		y.rolls--;
+		document.getElementById("rollsLeft").innerHTML = y.rolls;		
 
-		if (bit4.yahtzee.rolls === 0) {
-			bit4.yahtzee.gameState = "apply";			
+		if (y.rolls === 0) {
+			y.gameState = "apply";			
 		}
 	};
 
-	bit4.yahtzee.keepThisDie = function (img, num) {
+	y.keepThisDie = function (img, num) {
 		var id = +num;
 
-		if (bit4.yahtzee.rolls === bit4.yahtzee.maxRolls) {
+		if (y.rolls === y.maxRolls) {
 			return; }
 
-		if (bit4.yahtzee.diceToBeRolled[num] === id) {
-			bit4.yahtzee.diceToBeRolled[id] = 0;			
-			bit4.yahtzee.removeClassName(img, "unfrozen");
-			bit4.yahtzee.addClassName(img, "frozen");
+		if (y.diceToBeRolled[num] === id) {
+			y.diceToBeRolled[id] = 0;			
+			y.removeClassName(img, "unfrozen");
+			y.addClassName(img, "frozen");
 			return; }
 
-		if (bit4.yahtzee.diceToBeRolled[id] === 0) {
-			bit4.yahtzee.diceToBeRolled[id] = id;			
-			bit4.yahtzee.removeClassName(img, "frozen");
-			bit4.yahtzee.addClassName(img, "unfrozen");	}
+		if (y.diceToBeRolled[id] === 0) {
+			y.diceToBeRolled[id] = id;			
+			y.removeClassName(img, "frozen");
+			y.addClassName(img, "unfrozen");	}
 	};
 
-	bit4.yahtzee.containsClassName = function (e, name) {
+	y.containsClassName = function (e, name) {
 		var i,
 				classNames;
 
@@ -268,12 +265,12 @@ bit4.yahtzee = bit4.yahtzee || {};
 		return false; 
 	};
 
-	bit4.yahtzee.removeClassName = function (e, name) {
+	y.removeClassName = function (e, name) {
 		var i,
 				len,
 				classNames;
 
-		if (bit4.yahtzee.containsClassName(e, name) === false) {
+		if (y.containsClassName(e, name) === false) {
 			return; }
 
 		classNames = e.className.split(/\s/);
@@ -285,35 +282,35 @@ bit4.yahtzee = bit4.yahtzee || {};
 				return; } }
 	};
 
-	bit4.yahtzee.addClassName = function (e, name) {
-		if (bit4.yahtzee.containsClassName(e, name) === false) {
+	y.addClassName = function (e, name) {
+		if (y.containsClassName(e, name) === false) {
 			if (e.className === "") {
 				e.className = name; }
 			else {
 				e.className = e.className + " " + name; } }
 	};
 
-	bit4.yahtzee.getDiceTotal = function () {
-		var container = bit4.yahtzee.dieValues;
+	y.getDiceTotal = function () {
+		var container = y.dieValues;
 		return container[1] + container[2] + container[3] +
 					 container[4] + container[5];
 	};
 
-	bit4.yahtzee.updateGrandTotal = function () {
+	y.updateGrandTotal = function () {
 		var total;
-		total = bit4.yahtzee.calculateUpperTotal() +
-						bit4.yahtzee.calculateLowerTotal();
+		total = y.calculateUpperTotal() +
+						y.calculateLowerTotal();
 
 		document.getElementById("gt").innerHTML = total;
 	};
 
-	bit4.yahtzee.calculateUpperTotal = function () {
+	y.calculateUpperTotal = function () {
 		var total,
 				bonus,
 				scores;
 
 		bonus = 0;
-		scores = bit4.yahtzee.upper.scores;
+		scores = y.upper.scores;
 
 		total = scores.ones.score + scores.twos.score + scores.threes.score +
 					  scores.fours.score + scores.fives.score + scores.sixes.score;
@@ -327,11 +324,11 @@ bit4.yahtzee = bit4.yahtzee || {};
 		return total + bonus;
 	};
 
-	bit4.yahtzee.calculateLowerTotal = function () {
+	y.calculateLowerTotal = function () {
 		var total,
 				scores;
 
-		scores = bit4.yahtzee.lower.scores;
+		scores = y.lower.scores;
 
 		total = scores.threeOfKind.score + scores.fourOfKind.score + scores.fullHouse.score +
 						scores.smStr.score + scores.lgStr.score + scores.yahtzee.score +
@@ -340,14 +337,14 @@ bit4.yahtzee = bit4.yahtzee || {};
 		return total;
 	};
 
-	bit4.yahtzee.updateGUIscore = function (name, score) {
+	y.updateGUIscore = function (name, score) {
 		var element;
 
 		element = document.getElementById(name)
 		element.innerHTML = score;
 	};
 
-	bit4.yahtzee.applyLowerSectionPoints = function (name) {
+	y.applyLowerSectionPoints = function (name) {
 		var i,
 				fullhouse,
 				smStraight,
@@ -357,11 +354,11 @@ bit4.yahtzee = bit4.yahtzee || {};
 				updateLowerTotal,
 				hasYahtzee;
 
-		if (bit4.yahtzee.rolls === bit4.yahtzee.maxRolls) {
+		if (y.rolls === y.maxRolls) {
 			return; }
 
 		updateLowerTotal = function () {
-			var total = bit4.yahtzee.calculateLowerTotal();
+			var total = y.calculateLowerTotal();
 			document.getElementById("lowerTotal").innerHTML = total;
 		};
 
@@ -374,54 +371,54 @@ bit4.yahtzee = bit4.yahtzee || {};
 		score = 0;
 		count = [0,0,0,0,0,0,0];
 		// how many of each die values do we have?
-		for (i = 1; i < bit4.yahtzee.dieValues.length; i++) {
-			count[bit4.yahtzee.dieValues[i]]++; }
+		for (i = 1; i < y.dieValues.length; i++) {
+			count[y.dieValues[i]]++; }
 
 		switch (name) {
 			case "3kind":
-				if (bit4.yahtzee.lower.scores.threeOfKind.scored === true) {
+				if (y.lower.scores.threeOfKind.scored === true) {
 					return; }
 
 				for (i = 1; i < count.length; i++) {
 					if (count[i] >= 3) {
-						score = bit4.yahtzee.getDiceTotal(); }
-					bit4.yahtzee.lower.scores.threeOfKind.score = score;
-					bit4.yahtzee.lower.scores.threeOfKind.scored = true; }
+						score = y.getDiceTotal(); }
+					y.lower.scores.threeOfKind.score = score;
+					y.lower.scores.threeOfKind.scored = true; }
 				break;
 
 			case "4kind":
-				if (bit4.yahtzee.lower.scores.fourOfKind.scored === true) {
+				if (y.lower.scores.fourOfKind.scored === true) {
 					return; }
 
 				for (i = 1; i < count.length; i++) {
 					if (count[i] >= 4) {
-						score = bit4.yahtzee.getDiceTotal(); }
+						score = y.getDiceTotal(); }
 
-					bit4.yahtzee.lower.scores.fourOfKind.score = score;
-					bit4.yahtzee.lower.scores.fourOfKind.scored = true; }
+					y.lower.scores.fourOfKind.score = score;
+					y.lower.scores.fourOfKind.scored = true; }
 				break;
 
 			case "fh":
-				if (bit4.yahtzee.lower.scores.fullHouse.scored === true) {
+				if (y.lower.scores.fullHouse.scored === true) {
 					return; }
 
-				fullHouse = 0;
+				fullhouse = 0;
 
 				for (i = 1; i < count.length; i++) {
 					if (count[i] === 2) {
-						fullHouse += 2; }
+						fullhouse += 2; }
 					if (count[i] === 3) {
-						fullHouse += 3; } }
+						fullhouse += 3; } }
 
-				if (fullHouse === 5) {
+				if (fullhouse === 5) {
 					score = 25; }
 
-				bit4.yahtzee.lower.scores.fullHouse.score = score;
-				bit4.yahtzee.lower.scores.fullHouse.scored = true;
+				y.lower.scores.fullHouse.score = score;
+				y.lower.scores.fullHouse.scored = true;
 				break;
 
 			case "smst":
-				if (bit4.yahtzee.lower.scores.smStr.scored === true) {
+				if (y.lower.scores.smStr.scored === true) {
 					return; }
 
 				if (count[3] > 0 && count[4] > 0) {
@@ -430,32 +427,32 @@ bit4.yahtzee = bit4.yahtzee || {};
 							(count[2] > 0 && count[5] > 0)) {
 								score = 30; } }
 
-				bit4.yahtzee.lower.scores.smStr.score = score;
-				bit4.yahtzee.lower.scores.smStr.scored = true;
+				y.lower.scores.smStr.score = score;
+				y.lower.scores.smStr.scored = true;
 				break;
 
 			case "lgst":
-			if (bit4.yahtzee.lower.scores.lgStr.scored === true) {
+			if (y.lower.scores.lgStr.scored === true) {
 					return; }
 
 				if (count[2] > 0 && count[3] > 0 && count[4] > 0 && count[5] > 0) {
 					if (count[1] > 0 || count[6] > 0) {
 							score = 40; } }
 
-				bit4.yahtzee.lower.scores.lgStr.score = score;
-				bit4.yahtzee.lower.scores.lgStr.scored = true;
+				y.lower.scores.lgStr.score = score;
+				y.lower.scores.lgStr.scored = true;
 				break;
 
 			case "y":
-				if (bit4.yahtzee.lower.scores.yahtzee.scored === true) {
+				if (y.lower.scores.yahtzee.scored === true) {
 						return; }
 
 				if (hasYahtzee() === true) {
 					score = 50;					
-					bit4.yahtzee.removeClassName(document.getElementById("xydiv"), "hidden"); }
+					y.removeClassName(document.getElementById("xydiv"), "hidden"); }
 
-				bit4.yahtzee.lower.scores.yahtzee.score = score;
-				bit4.yahtzee.lower.scores.yahtzee.scored = true;
+				y.lower.scores.yahtzee.score = score;
+				y.lower.scores.yahtzee.scored = true;
 				break;
 
 			case "xy":
@@ -463,29 +460,29 @@ bit4.yahtzee = bit4.yahtzee || {};
 					return; }
 
 				score = 100;
-				bit4.yahtzee.lower.scores.bonusYahtzee.score += score;
-				bit4.yahtzee.lower.scores.bonusYahtzee.scored = true;
-				bit4.yahtzee.maxRounds++;
+				y.lower.scores.bonusYahtzee.score += score;
+				y.lower.scores.bonusYahtzee.scored = true;
+				y.maxRounds++;
 				break;
 
 			case "ch":
-				if (bit4.yahtzee.lower.scores.chance.scored === true) {
+				if (y.lower.scores.chance.scored === true) {
 					return; }
 
-				score = bit4.yahtzee.getDiceTotal();
-				bit4.yahtzee.lower.scores.chance.score = score;
-				bit4.yahtzee.lower.scores.chance.scored = true;
+				score = y.getDiceTotal();
+				y.lower.scores.chance.score = score;
+				y.lower.scores.chance.scored = true;
 				break;
 		}
 
-		bit4.yahtzee.rounds++;
-		bit4.yahtzee.updateGUIscore(name, score);
+		y.rounds++;
+		y.updateGUIscore(name, score);
 		updateLowerTotal();
-		bit4.yahtzee.updateGrandTotal();
-		bit4.yahtzee.clearForNextRoll();
+		y.updateGrandTotal();
+		y.clearForNextRoll();
 	};
 
-	bit4.yahtzee.applyUpperSectionPoints = function (name) {
+	y.applyUpperSectionPoints = function (name) {
 		var i,
 				score,
 				updateUpperTotal,
@@ -493,96 +490,96 @@ bit4.yahtzee = bit4.yahtzee || {};
 				scoreElement,
 				clearForNextRoll;
 
-		if (bit4.yahtzee.rolls === bit4.yahtzee.maxRolls) {
+		if (y.rolls === y.maxRolls) {
 			return; }
 
 		updateUpperTotal = function () {
-			var total = bit4.yahtzee.calculateUpperTotal();
+			var total = y.calculateUpperTotal();
 			document.getElementById("upperTotal").innerHTML = total;
 		};
 
 		score = 0;
 		switch (name) {
 			case "ones":
-				if (bit4.yahtzee.upper.scores.ones.scored === true) {
+				if (y.upper.scores.ones.scored === true) {
 					return; }
 
-				for (i = 1; i < bit4.yahtzee.dieValues.length; i++) {
-					if (bit4.yahtzee.dieValues[i] === 1) {
+				for (i = 1; i < y.dieValues.length; i++) {
+					if (y.dieValues[i] === 1) {
 						score++; }}
 
-				bit4.yahtzee.upper.scores.ones.score = score;
-				bit4.yahtzee.upper.scores.ones.scored = true;	
+				y.upper.scores.ones.score = score;
+				y.upper.scores.ones.scored = true;	
 				break;
 
 			case "twos":
-				if (bit4.yahtzee.upper.scores.twos.scored === true) {
+				if (y.upper.scores.twos.scored === true) {
 					return; }
 
-				for (i = 1; i < bit4.yahtzee.dieValues.length; i++) {
-					if (bit4.yahtzee.dieValues[i] === 2) {
+				for (i = 1; i < y.dieValues.length; i++) {
+					if (y.dieValues[i] === 2) {
 						score += 2; }}
 
-				bit4.yahtzee.upper.scores.twos.score = score;
-				bit4.yahtzee.upper.scores.twos.scored = true;
+				y.upper.scores.twos.score = score;
+				y.upper.scores.twos.scored = true;
 				break;
 
 			case "threes":
-				if (bit4.yahtzee.upper.scores.threes.scored === true) {
+				if (y.upper.scores.threes.scored === true) {
 					return; }
 
-				for (i = 1; i < bit4.yahtzee.dieValues.length; i++) {
-					if (bit4.yahtzee.dieValues[i] === 3) {
+				for (i = 1; i < y.dieValues.length; i++) {
+					if (y.dieValues[i] === 3) {
 						score += 3; }}
 
-				bit4.yahtzee.upper.scores.threes.score = score;
-				bit4.yahtzee.upper.scores.threes.scored = true;
+				y.upper.scores.threes.score = score;
+				y.upper.scores.threes.scored = true;
 				break;
 
 			case "fours":
-				if (bit4.yahtzee.upper.scores.fours.scored === true) {
+				if (y.upper.scores.fours.scored === true) {
 					return; }
 
-				for (i = 1; i < bit4.yahtzee.dieValues.length; i++) {
-					if (bit4.yahtzee.dieValues[i] === 4) {
+				for (i = 1; i < y.dieValues.length; i++) {
+					if (y.dieValues[i] === 4) {
 						score += 4; }}
 
-				bit4.yahtzee.upper.scores.fours.score = score;
-				bit4.yahtzee.upper.scores.fours.scored = true;
+				y.upper.scores.fours.score = score;
+				y.upper.scores.fours.scored = true;
 				break;
 
 			case "fives":
-				if (bit4.yahtzee.upper.scores.fives.scored === true) {
+				if (y.upper.scores.fives.scored === true) {
 					return; }
 
-				for (i = 1; i < bit4.yahtzee.dieValues.length; i++) {
-					if (bit4.yahtzee.dieValues[i] === 5) {
+				for (i = 1; i < y.dieValues.length; i++) {
+					if (y.dieValues[i] === 5) {
 						score += 5; }}
 				
-				bit4.yahtzee.upper.scores.fives.score = score;
-				bit4.yahtzee.upper.scores.fives.scored = true;
+				y.upper.scores.fives.score = score;
+				y.upper.scores.fives.scored = true;
 				break;
 
 			case "sixes":
-				if (bit4.yahtzee.upper.scores.sixes.scored === true) {
+				if (y.upper.scores.sixes.scored === true) {
 					return; }
 
-				for (i = 1; i < bit4.yahtzee.dieValues.length; i++) {
-					if (bit4.yahtzee.dieValues[i] === 6) {
+				for (i = 1; i < y.dieValues.length; i++) {
+					if (y.dieValues[i] === 6) {
 						score += 6; }}
 				
-				bit4.yahtzee.upper.scores.sixes.score = score;
-				bit4.yahtzee.upper.scores.sixes.scored = true;
+				y.upper.scores.sixes.score = score;
+				y.upper.scores.sixes.scored = true;
 				break;
 		}
 
-		bit4.yahtzee.rounds++;
-		bit4.yahtzee.updateGUIscore(name, score);
+		y.rounds++;
+		y.updateGUIscore(name, score);
 		updateUpperTotal();
-		bit4.yahtzee.updateGrandTotal();
-		bit4.yahtzee.clearForNextRoll();
+		y.updateGrandTotal();
+		y.clearForNextRoll();
 	};
 
-	bit4.yahtzee.startMsgSystem();
-	bit4.yahtzee.loadHighScore();
+	y.startMsgSystem();
+	y.loadHighScore();
 }());
