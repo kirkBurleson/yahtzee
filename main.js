@@ -487,8 +487,7 @@ bit4.yahtzee = bit4.yahtzee || {};
 				score,
 				updateUpperTotal,
 				addScoreToTotals,
-				scoreElement,
-				clearForNextRoll;
+				scoreElement;
 
 		if (y.rolls === y.maxRolls) {
 			return; }
