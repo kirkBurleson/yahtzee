@@ -1,0 +1,59 @@
+How to play Yahtzee
+-------------------
+
+The object of the game is to get the highest score possible.
+
+The game uses 5 dice.
+
+The player may roll a maximum of 3 times.
+
+The player must roll all dice at the beginning of a round.
+
+A round begins with the first roll and ends with the player applying a score.
+
+The player may choose to set aside dice to keep them from being rolled on the 2nd and 3rd turns.
+
+A turn is rolling one or more dice.
+
+The player can apply a score any time after the first turn and must after the third turn.
+
+Scoring
+----------
+
+Try to roll the dice to get these combinations:
+
+Ones:	All the ones you can roll.
+Twos:	All the twos you can roll.
+Threes:	All the threes you can roll.
+Fours:	All the fours you can roll.
+Fives:	All the fives you can roll.
+Sixes:	All the sixes you can roll.
+
+3 of a kind:	Must have at least 3 dice of the same value.
+4 of a kind:	Must have at least 4 dice of the same value.
+Full House:	Must have 3 dice of the same value and 2 dice of the same value.
+Small Straight:	Any 4 die values in a row (3 4 5 6)
+Large Straight:	Any 5 die values in a row (2 3 4 5 6)
+Yahtzee:	All 5 dice have the same value.
+Extra Yahtzee:	Same as Yahtzee but worth double the points.
+Chance:		Total of all dice.
+
+The GUI
+------------
+
+The “roll” button rolls all dice that are not saved.
+
+Clicking a die will save and release it.  A black border indicates a saved die.
+
+Clicking the text of a score target will apply the die score to it.
+
+The number in the middle top of the screen is the all time high score.
+
+The number in the top right corner is the player’s current score.
+
+Messages
+------------
+
+The message at the bottom center of the board tells the player what to do next.
+
+
