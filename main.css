@@ -35,10 +35,12 @@ h1, h3 {
 
 #upperSection {
 	float: left;
+	width: 150px;
 	}
 
 #lowerSection {
 	float: right;
+	width: 150px;
 	}
 
 #diceSection {
@@ -77,14 +79,6 @@ h1, h3 {
 
 
 /* classes --------------------------- */
-
-.leftSide {
-	width: 100px;
-	}
-
-.rightSide {
-	width: 120px;
-	}
 
 .canClick:hover {
 	background-color: white;
